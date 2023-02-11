@@ -15,7 +15,7 @@ Docker
 Developing
 ----------
 
-### Setup ###
+## Server-side Setup ##
 
 Install node with [nvm](https://github.com/nvm-sh/nvm).
 
@@ -77,3 +77,20 @@ While developing, you can skip building by using tsnode.
 ### Update dependencies ###
 
     npm run ncu
+
+
+## Client-side Setup ##
+
+Install Rust and its dev tools via Rustup
+
+    curl https://sh.rustup.rs -sSf | sh
+
+
+### Build & Package the game ###
+    
+    cargo build
+
+
+### Run the game ###
+
+    cargo run
