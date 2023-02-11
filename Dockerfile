@@ -11,6 +11,7 @@ run npm run ci
 
 from node:${nodeV}-bullseye-slim as release
 copy package.json package-lock.json ./
-COPY --from=build dist/ dist/
+copy public public
+copy --from=build dist/ dist/
 run npm install --omit=dev
-ENTRYPOINT ["npm", "start"]
+entrypoint ["npm", "start"]
