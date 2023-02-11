@@ -16,7 +16,7 @@
     "lint": "npm run fmt && npm run eslint",
     "ncu": "ncu -u && rm -fr node_modules package-lock.json && npm install",
     "tsc": "tsc",
-    "doc": "typedoc --out doc/ src",
+    "doc": "typedoc --entryPointStrategy expand --out doc/ src/",
     "ci": "npm run check && tsc && npm test",
     "all": "npm run lint && tsc && npm test"
   },
