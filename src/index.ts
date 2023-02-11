@@ -1,6 +1,5 @@
 import express, { Express, Request, Response } from 'express'
-
-export const hello = () => 'Hello world!\n'
+import { hello } from './hello.js'
 
 console.log(hello())
 

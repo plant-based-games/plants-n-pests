@@ -1,4 +1,4 @@
-import { hello } from '../src/index'
+import { hello } from '../src/hello'
 
 describe('hello', () => {
   it('returns a greeting', () => {
