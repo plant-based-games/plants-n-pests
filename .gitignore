@@ -8,3 +8,4 @@ coverage
 .vscode
 .idea
 target/*
+/manual-test/cookie.txt
