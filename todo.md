@@ -1,5 +1,4 @@
 backend:
-- install zod
 - use zod to parse cookie
     - player id
 - create reusable authorization validation function for play & draft endpoints

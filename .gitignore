@@ -9,3 +9,4 @@ coverage
 .idea
 target/*
 /manual-test/cookie.txt
+/.env

@@ -1,6 +1,13 @@
 import express, { Express, Request, Response } from 'express'
 import cookieSession from 'cookie-session'
 import { hello } from './hello.js'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
+const cookieSecret = process.env['cookie_secret']
+if (cookieSecret === undefined) {
+  throw new Error('cookie_secret env var is undefined :(')
+}
 
 console.log(hello())
 
@@ -11,7 +18,7 @@ app.use(express.json())
 app.use(
   cookieSession({
     name: 'session',
-    keys: ['changeme'],
+    keys: [cookieSecret],
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   }),
