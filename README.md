@@ -27,6 +27,16 @@ Install npm packages.
     npm install
 
 
+### Configuration ###
+
+Define a secret for cookie signing.
+
+    cp example.env .env
+    pwgen -sy 48 >> .env
+
+Edit .env file to set cookie_secret
+
+
 ### Build ###
 
     npx tsc
