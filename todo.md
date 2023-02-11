@@ -11,6 +11,20 @@ backend:
     - on draft endpoint, check draft array to validate player
     - on play endpoint, check awaiting play to validate player
 
+frontend/client:
+- Game state 
+- UI
+  - card mesh and assets
+  - board meshes and assets
+- Menu
+  - menu buttons, font rendering
+- Game State
+  - menu, loading, in game, end game? 
+- Networking plugin
+  - exchange game data with the server
+  - heartbeat
+- Audio?
+
 
 Game flow
 ---------

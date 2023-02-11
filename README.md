@@ -85,12 +85,31 @@ Install Rust and its dev tools via Rustup
 
     curl https://sh.rustup.rs -sSf | sh
 
+Make sure you have the wasm compilation target & Install the WASM Bindgen
 
-### Build & Package the game ###
+    rustup target add wasm32-unknown-unknown
+    cargo install wasm-bindgen-cli
+
+### Build & Package the game for WASM ###
     
+    cargo build --release --target wasm32-unknown-unknown
+    wasm-bindgen --out-name wasm_example \
+    --out-dir examples/wasm/target \
+    --target web target/wasm32-unknown-unknown/release/examples/lighting.wasm
+
+
+### Build & run the game for your local environment ###
+
     cargo build
-
-
-### Run the game ###
-
     cargo run
+
+
+### Run rust tests ###
+
+    cargo test
+
+
+### Format rust code ###
+
+    cargo fmt
+
