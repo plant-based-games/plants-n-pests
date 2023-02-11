@@ -6,3 +6,5 @@ dist
 coverage
 /doc
 .vscode
+.idea
+target/*
