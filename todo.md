@@ -11,7 +11,13 @@ backend:
     - on draft endpoint, check draft array to validate player
     - on play endpoint, check awaiting play to validate player
 
-$direction = left
+
+Game flow
+---------
+
+### Draft phase ###
+
+- $direction = left
 - Draft
 - Each player dealt 12 cards
     - Draft cycle
@@ -23,9 +29,12 @@ $direction = left
 - toggle $direction
 - Repeat Draft 2 times
 
-You drafted 24 cards and played 6.
-Now you have a deck of 18 remaining cards.
-Round
-Draw 6 cards and each player plays a card or passes in turn order.
-Round ends once all players pass.
-Repeat Round 3 times.
+
+### Round phase ###
+
+- You drafted 24 cards and played 6.
+- Now you have a deck of 18 remaining cards.
+- Round
+- Draw 6 cards and each player plays a card or passes in turn order.
+- Round ends once all players pass.
+- Repeat Round 3 times.
