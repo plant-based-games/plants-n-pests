@@ -27,11 +27,6 @@ Install npm packages.
     npm install
 
 
-### Run ###
-
-    npm start
-
-
 ### Run during dev ###
 
 While developing, you can skip building by using tsnode.
@@ -42,6 +37,11 @@ While developing, you can skip building by using tsnode.
 ### Format, lint, build, test ###
 
     npm run all
+
+
+### Run ###
+
+    npm start
 
 
 ### Test coverage ###

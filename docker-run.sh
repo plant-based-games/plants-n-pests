@@ -2,4 +2,4 @@
 
 docker run --rm \
     --network=host \
-    node-app
+    plantsnpests

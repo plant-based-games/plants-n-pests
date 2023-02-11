@@ -1,1 +1,1 @@
-docker build -t node-app .
+docker build -t plantsnpests .
