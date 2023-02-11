@@ -29,6 +29,7 @@
   "repository": "https://github.com/plant-based-games/plants-n-pests",
   "devDependencies": {
     "@tsconfig/node18-strictest-esm": "^1.0.1",
+    "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.13.0",
