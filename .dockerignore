@@ -1,0 +1,9 @@
+*
+!src
+!test
+!package.json
+!package-lock.json
+!tsconfig.json
+!jest.config.ts
+!.eslintrc.yaml
+!.prettierrc.yaml

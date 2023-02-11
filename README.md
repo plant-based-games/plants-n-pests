@@ -1,36 +1,73 @@
 Plants & Pests
 ==============
 
-Card types
-- seeds/plants
-- pests
-- resources (sunlight/water/nutrients)
-- traits
-- terrain
-- weather?
-
-Metrics Options
--# of plants on board
--# of plant points
--variety of plants bonus
--maturity of plants bonus?
--idea: we could have scoring critering on certain plant cards (or terrain, or both) so playing cards influences the game scoring.  Each game would score based on cards played.
-
-MVP:
-server that brings up UI
-some cards
-Start of round everyone draws 5 cards, we go in order and everyone does 1 action
-Everyone is on one big grid
+TypeScript node.js project skeleton.  Clone this and modify.
 
 
-Game end:
-- 4 rounds of 5 cards
-- someone reached a number of points
-- no more space in the garden
+Docker
+------
 
-- garden: 5x5 grid of "plots" (card slots)
-- certain plants may have effect on some or all adjacent plots
-- certain pests may have effects on some or all adjacent plots
-- Round:
-all players draw five cards.
-Each player can play a card in turn order or pass.  Round ends when all players pass.
+    sh docker-build.sh
+    sh docker-run.sh
+
+
+Developing
+----------
+
+### Setup ###
+
+Install node with [nvm](https://github.com/nvm-sh/nvm).
+
+    nvm install     # one-time install
+    nvm use         # each time you enter the project directory
+
+Install npm packages.
+
+    npm install
+
+
+### Run ###
+
+    npm start
+
+
+### Run during dev ###
+
+While developing, you can skip building by using tsnode.
+
+    npm run start-dev
+
+
+### Format, lint, build, test ###
+
+    npm run all
+
+
+### Test coverage ###
+
+    # Run the tests with `npm run all` or
+    npm test
+    # This will generate the test coverage report
+    # Then open the test coverage report
+    firefox coverage/lcov-report/index.html
+
+
+### Generate documentation ###
+
+    npm run doc
+    firefox docs/index.html &
+
+
+### Update dependencies ###
+
+    npm run ncu
+
+
+### Publish ###
+
+    npm login
+    npm version patch/minor/major
+    npm publish
+
+
+Author:  Lyall Jonathan Di Trapani
