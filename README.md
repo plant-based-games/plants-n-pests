@@ -1,7 +1,8 @@
 Plants & Pests
 ==============
 
-TypeScript node.js project skeleton.  Clone this and modify.
+Plant-based CCG.
+Home-grown card game goodness.
 
 
 Docker
@@ -61,13 +62,3 @@ While developing, you can skip building by using tsnode.
 ### Update dependencies ###
 
     npm run ncu
-
-
-### Publish ###
-
-    npm login
-    npm version patch/minor/major
-    npm publish
-
-
-Author:  Lyall Jonathan Di Trapani

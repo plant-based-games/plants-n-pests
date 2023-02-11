@@ -1,7 +1,7 @@
 {
-  "name": "ts-node-skeleton",
+  "name": "plants-n-pests",
   "version": "0.0.1",
-  "description": "ts-node-skeleton",
+  "description": "Plant-based TCG",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
@@ -21,12 +21,12 @@
     "all": "npm run lint && tsc && npm test"
   },
   "keywords": [
-    "typescript",
-    "node",
-    "ts-node"
+    "ccg",
+    "plant-based",
+    "card game"
   ],
-  "author": "Lyall Jonathan Di Trapani",
-  "repository": "https://github.com/lj-ditrapani/ts-node-skeleton",
+  "author": "plant-based-games",
+  "repository": "https://github.com/plant-based-games/plants-n-pests",
   "devDependencies": {
     "@tsconfig/node18-strictest-esm": "^1.0.1",
     "@types/jest": "^29.4.0",
