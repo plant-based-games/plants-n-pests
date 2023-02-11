@@ -1,6 +1,4 @@
 backend:
-- use zod to parse cookie
-    - player id
 - create reusable authorization validation function for play & draft endpoints
 - initial state is waiting for players
 - increment player id until 4, then game auto-starts
@@ -49,6 +47,43 @@ Game flow
 - You drafted 24 cards and played 6.
 - Now you have a deck of 18 remaining cards.
 - Round
-- Draw 6 cards and each player plays a card or passes in turn order.
+- Draw 6 cards and each player, in turn order, takes a turn:
+- A turn can be 1 of 4 actions:
+    - play a card
+    - harvest+sell 1 previously planted plant
+    - fulfill a contract
+    - pass your turn
 - Round ends once all players pass.
 - Repeat Round 3 times.
+
+
+Ideas
+-----
+
+Goal: grow plants to sell for money (victory points) at the market or to satisfy contracts.  Player with most money at end of game wins.
+
+
+### Garden ###
+
+5 x 5 grid of empty plots.  This is a shared space.  Each cell in the grid can have 1 terrain and 1 plant.
+
+
+### Card types ###
+
+- contracts
+- terrain
+- plants
+
+- contract: requires you to harvest a fixed quantity of plant(s).  Rewards you with a fixed price if requirement met.  Otherwise, pay a monetary penalty.
+    - requirement
+    - reward
+    - penalty
+- terrain: play into an empty grid cell to claim that cell and meet plant planting requirements.
+- plant: play into one of your terrains if that terrain & its surrounding terrains meets the plant's requirements.  Each plant type increases the yield of certain other adjacent plants, and decreases the yield of certain other adjacent plants.  On any subsequent turn, you can harvest and sell the plant you previously planted.  Certain plants have yield benefits if adjacent to certain terrain.   Certain plants have yield penalties if adjacent to certain terrain.
+
+
+### Market price ###
+
+- Each plant type starts at a random market price.
+- The market price for a given plant goes up each round no one sells any of that plant type.
+- The market price for a given plant goes down each round someone sells any of that plant type.
