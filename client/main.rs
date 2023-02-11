@@ -76,7 +76,6 @@ fn add_plants(mut commands: Commands) {
 
 fn main() {
     App::new()
-        .insert_resource(ClearColor(Color::rgb(0.0, 0.0, 0.0)))
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             window: WindowDescriptor {
                 title: String::from("Plants & Pests"),

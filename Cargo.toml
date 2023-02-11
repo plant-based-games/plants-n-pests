@@ -3,6 +3,9 @@ name = "plants-n-pests"
 version = "0.1.0"
 edition = "2021"
 
+[build]
+target = "wasm32-unknown-unknown"
+
 [[bin]]
 name = "client"
 path = "client/main.rs"
@@ -14,4 +17,4 @@ opt-level = 1
 opt-level = 3
 
 [dependencies]
-bevy = { version = "0.9.1", features = ["dynamic"] }
+bevy = { version = "0.9.1", features = ["dynamic"], default-features = false }
