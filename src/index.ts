@@ -4,9 +4,10 @@ import { hello } from './hello.js'
 console.log(hello())
 
 const app: Express = express()
+app.use(express.static('public'))
 const port = 8000
 
-app.get('/', (_req: Request, res: Response) => {
+app.get('/turn', (_req: Request, res: Response) => {
   res.send('This is plants-n-pests server...what do you want?')
 })
 
