@@ -2,6 +2,7 @@ backend:
 - install zod
 - use zod to parse cookie
     - player id
+- create reusable authorization validation function for play & draft endpoints
 - initial state is waiting for players
 - increment player id until 4, then game auto-starts
 - player 1 can start game at 2 or 3 players
