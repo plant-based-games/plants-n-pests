@@ -1,2 +1,5 @@
 node_modules
 package-lock.json
+public/*.d.ts
+public/*.js
+Cargo.lock
