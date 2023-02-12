@@ -1,10 +1,8 @@
 backend:
-- create reusable authorization validation function for play & draft endpoints
-- initial state is waiting for players
-- increment player id until 4, then game auto-starts
-- player 1 can start game at 2 or 3 players
-- add draft endpoint
-    - will have draft and play endpoints
+- Need to re-do GameState
+    - should always be an object with state property
+    - needs kind property to union with StatusCode
+- player 1 can start game at 3 players instead of 4
 - have a awaiting draft array & awaiting play Option<Player>
     - on draft endpoint, check draft array to validate player
     - on play endpoint, check awaiting play to validate player
