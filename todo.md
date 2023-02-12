@@ -99,3 +99,12 @@ Goal: grow plants to sell for money (victory points) at the market or to satisfy
 - Each plant type starts at a random market price.
 - The market price for a given plant goes up each round no one sells any of that plant type.
 - The market price for a given plant goes down each round someone sells any of that plant type.
+
+
+### Bootstrap ###
+
+- index.html loads html/js/css/wasm
+- call login to get cookie
+- If 1st player, can select 3 or 4 player game
+- All players can see number of players joined so far
+- once all players have called login, start game

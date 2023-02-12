@@ -48,6 +48,16 @@ app.post('/draft/:cardId', (req: Request, res: Response) => {
   }
 })
 
+app.post('/play-contract/:cardId', (req: Request, res: Response) => {
+  console.log('contract', req.params['cardId'])
+  if (req.session && req.session['player']) {
+    const player = req.session['player']
+    res.send(`processed player ${player} contract card play`)
+  } else {
+    res.status(401).end()
+  }
+})
+
 app.post('/play/:cardId/:xLocation/:yLocation', (req: Request, res: Response) => {
   console.log(req.params['cardId'], req.params['xLocation'], req.params['yLocation'])
   if (req.session && req.session['player']) {
