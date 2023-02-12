@@ -19,19 +19,18 @@ fn handle_browser_resize(mut windows: ResMut<Windows>) {
 }
 
 fn main() {
-    App::new()
+    let mut app = App::new();
 
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
-            window: WindowDescriptor {
-                title: String::from("Plants & Pests"),
-                resizable: true,
-                fit_canvas_to_parent: true,
-                ..default()
-            },
+    app.add_plugins(DefaultPlugins.set(WindowPlugin {
+        window: WindowDescriptor {
+            title: String::from("Plants & Pests"),
+            resizable: true,
+            fit_canvas_to_parent: true,
             ..default()
-        }))
-        .add_plugin(HelloPlugin);
-
+        },
+        ..default()
+    }))
+    .add_plugin(HelloPlugin);
     #[cfg(target_arch = "wasm32")]
     app.add_system(handle_browser_resize);
 
