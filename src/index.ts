@@ -3,7 +3,7 @@ import cookieSession from 'cookie-session'
 import { hello } from './hello.js'
 import * as dotenv from 'dotenv'
 import { z } from 'zod'
-import { Game, GameState } from './game.js'
+import { Game, State } from './game.js'
 
 dotenv.config()
 
@@ -35,11 +35,7 @@ const port = 8000
 
 const game = new Game()
 
-const doIfValidPlayer = (
-  req: Request,
-  res: Response,
-  f: (playerId: number) => GameState,
-) => {
+const doIfValidPlayer = (req: Request, res: Response, f: (playerId: number) => State) => {
   const result = Cookie.safeParse(req.session)
   if (result.success === true) {
     const gameState = f(result.data.player)
