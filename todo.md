@@ -1,7 +1,6 @@
 backend:
 - Need to re-do GameState
     - should always be an object with state property
-    - needs kind property to union with StatusCode
 - player 1 can start game at 3 players instead of 4
 - have a awaiting draft array & awaiting play Option<Player>
     - on draft endpoint, check draft array to validate player
@@ -103,6 +102,15 @@ Goal: grow plants to sell for money (victory points) at the market or to satisfy
 
 - index.html loads html/js/css/wasm
 - call login to get cookie
-- If 1st player, can select 3 or 4 player game
+- If 1st player, can select 3 or 4 player game (call set-player-count)
 - All players can see number of players joined so far
 - once all players have called login, start game
+
+
+### Communication ###
+
+- When waiting for other players, frontend calls GET pollState every 1 second and updates view with new GameState.
+- When current players turn, once play makes choice, frontend calls appropriate endpoint to update game state
+    - draft
+    - play
+    - play-contract

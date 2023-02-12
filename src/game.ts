@@ -2,25 +2,25 @@ export class Game {
   private state: GameState = 'no players'
   private playerCount: 3 | 4 = 4
 
-  login(): number | StatusCode {
+  login(): number {
     switch (this.state) {
       case 'no players':
+        this.state = '1 player'
         return 1
       case '1 player':
+        this.state = '2 players'
         return 2
       case '2 players':
-        if (this.playerCount === 3) {
-          this.state = 'ready'
-        }
+        this.state = this.playerCount === 3 ? 'ready' : '3 players'
         return 3
       case '3 players':
         if (this.playerCount === 3) {
-          return statusCode(400)
+          throw new UserError(400)
         }
         this.state = 'ready'
         return 4
       default:
-        return statusCode(400)
+        throw new UserError(400)
     }
   }
 
@@ -28,7 +28,7 @@ export class Game {
     return this.state
   }
 
-  playContract(playerId: number, cardId?: string): GameState | StatusCode {
+  playContract(playerId: number, cardId?: string): GameState {
     console.log(`process player ${playerId} played contract card ${cardId}`)
     return this.state
   }
@@ -38,14 +38,14 @@ export class Game {
     cardId?: string,
     xLocation?: string,
     yLocation?: string,
-  ): GameState | StatusCode {
+  ): GameState {
     console.log(
       `Processed player ${playerId} played card ${cardId} at location (${xLocation}, ${yLocation})`,
     )
     return this.state
   }
 
-  draft(playerId: number, cardId?: string): GameState | StatusCode {
+  draft(playerId: number, cardId?: string): GameState {
     console.log(`Processed player ${playerId} drafted card ${cardId}`)
     return this.state
   }
@@ -54,6 +54,8 @@ export class Game {
 type PlayersJoining = 'no players' | '1 player' | '2 players' | '3 players'
 export type GameState = PlayersJoining | 'ready'
 
-export type StatusCode = { kind: 'status'; code: number }
-
-const statusCode = (code: number): StatusCode => ({ kind: 'status', code })
+class UserError extends Error {
+  constructor(public readonly statusCode: number) {
+    super(`http request user error ${statusCode}`)
+  }
+}

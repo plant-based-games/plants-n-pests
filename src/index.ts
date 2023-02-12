@@ -3,7 +3,7 @@ import cookieSession from 'cookie-session'
 import { hello } from './hello.js'
 import * as dotenv from 'dotenv'
 import { z } from 'zod'
-import { Game, GameState, StatusCode } from './game.js'
+import { Game, GameState } from './game.js'
 
 dotenv.config()
 
@@ -38,16 +38,12 @@ const game = new Game()
 const doIfValidPlayer = (
   req: Request,
   res: Response,
-  f: (playerId: number) => GameState | StatusCode,
+  f: (playerId: number) => GameState,
 ) => {
   const result = Cookie.safeParse(req.session)
   if (result.success === true) {
-    const result2 = f(result.data.player)
-    if (typeof result2 === 'string') {
-      res.send(result2)
-    } else {
-      res.status(result2.code).end
-    }
+    const gameState = f(result.data.player)
+    res.send(gameState)
   } else {
     res.status(401).end
   }
@@ -55,13 +51,9 @@ const doIfValidPlayer = (
 
 app.post('/login', (req: Request, res: Response) => {
   const result = game.login()
-  if (typeof result === 'number') {
-    const cookie: Cookie = { player: result }
-    req.session = cookie
-    res.send(cookie)
-  } else {
-    res.status(result.code).end()
-  }
+  const cookie: Cookie = { player: result }
+  req.session = cookie
+  res.send(cookie)
 })
 
 app.post('/play-contract/:cardId', (req: Request, res: Response) => {
