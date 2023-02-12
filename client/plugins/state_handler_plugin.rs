@@ -484,7 +484,7 @@ mod menu {
                                 MenuButtonAction::Play,
                             ))
                             .with_children(|parent| {
-                                let icon = asset_server.load("textures/icons/right.png");
+                                let icon = asset_server.load("icons/right.png");
                                 parent.spawn(ImageBundle {
                                     style: button_icon_style.clone(),
                                     image: UiImage::from(icon),
@@ -505,7 +505,7 @@ mod menu {
                                 MenuButtonAction::Settings,
                             ))
                             .with_children(|parent| {
-                                let icon = asset_server.load("textures/icons/wrench.png");
+                                let icon = asset_server.load("icons/wrench.png");
                                 parent.spawn(ImageBundle {
                                     style: button_icon_style.clone(),
                                     image: UiImage::from(icon),
@@ -526,7 +526,7 @@ mod menu {
                                 MenuButtonAction::Quit,
                             ))
                             .with_children(|parent| {
-                                let icon = asset_server.load("textures/icons/exitRight.png");
+                                let icon = asset_server.load("icons/exitRight.png");
                                 parent.spawn(ImageBundle {
                                     style: button_icon_style,
                                     image: UiImage::from(icon),
