@@ -3,6 +3,7 @@ import cookieSession from 'cookie-session'
 import { hello } from './hello.js'
 import * as dotenv from 'dotenv'
 import { z } from 'zod'
+import { Game, GameState, StatusCode } from './game.js'
 
 dotenv.config()
 
@@ -32,40 +33,56 @@ app.use(
 )
 const port = 8000
 
-app.post('/login', (req: Request, res: Response) => {
-  const cookie: Cookie = { player: 1 }
-  req.session = cookie
-  res.send(cookie)
-})
+const game = new Game()
 
-app.post('/draft/:cardId', (req: Request, res: Response) => {
-  console.log(req.params['cardId'])
-  if (req.session && req.session['player']) {
-    const player = req.session['player']
-    res.send(`processed player ${player} card draft`)
+const doIfValidPlayer = (
+  req: Request,
+  res: Response,
+  f: (playerId: number) => GameState | StatusCode,
+) => {
+  const result = Cookie.safeParse(req.session)
+  if (result.success === true) {
+    const result2 = f(result.data.player)
+    if (typeof result2 === 'string') {
+      res.send(result2)
+    } else {
+      res.status(result2.code).end
+    }
   } else {
-    res.status(401).end()
+    res.status(401).end
+  }
+}
+
+app.post('/login', (req: Request, res: Response) => {
+  const result = game.login()
+  if (typeof result === 'number') {
+    const cookie: Cookie = { player: result }
+    req.session = cookie
+    res.send(cookie)
+  } else {
+    res.status(result.code).end()
   }
 })
 
 app.post('/play-contract/:cardId', (req: Request, res: Response) => {
-  console.log('contract', req.params['cardId'])
-  if (req.session && req.session['player']) {
-    const player = req.session['player']
-    res.send(`processed player ${player} contract card play`)
-  } else {
-    res.status(401).end()
-  }
+  doIfValidPlayer(req, res, (playerId) =>
+    game.playContract(playerId, req.params['cardId']),
+  )
 })
 
 app.post('/play/:cardId/:xLocation/:yLocation', (req: Request, res: Response) => {
-  console.log(req.params['cardId'], req.params['xLocation'], req.params['yLocation'])
-  if (req.session && req.session['player']) {
-    const player = req.session['player']
-    res.send(`processed player ${player} card play`)
-  } else {
-    res.status(401).end()
-  }
+  doIfValidPlayer(req, res, (playerId) =>
+    game.play(
+      playerId,
+      req.params['cardId'],
+      req.params['xLocation'],
+      req.params['yLocation'],
+    ),
+  )
+})
+
+app.post('/draft/:cardId', (req: Request, res: Response) => {
+  doIfValidPlayer(req, res, (playerId) => game.draft(playerId, req.params['cardId']))
 })
 
 app.listen(port, () => {

@@ -2,7 +2,7 @@ export class Game {
   private state: GameState = 'no players'
   private playerCount: 3 | 4 = 4
 
-  login(): number | Status {
+  login(): number | StatusCode {
     switch (this.state) {
       case 'no players':
         return 1
@@ -15,12 +15,12 @@ export class Game {
         return 3
       case '3 players':
         if (this.playerCount === 3) {
-          return { code: 400 }
+          return statusCode(400)
         }
         this.state = 'ready'
         return 4
       default:
-        return { code: 400 }
+        return statusCode(400)
     }
   }
 
@@ -28,23 +28,32 @@ export class Game {
     return this.state
   }
 
-  playContract(playerId: number, cardId?: number): GameState | Status {
+  playContract(playerId: number, cardId?: string): GameState | StatusCode {
     console.log(`process player ${playerId} played contract card ${cardId}`)
     return this.state
   }
 
-  play(playerId: number, cardId?: number, xLocation?: number, yLocation?: number) {
+  play(
+    playerId: number,
+    cardId?: string,
+    xLocation?: string,
+    yLocation?: string,
+  ): GameState | StatusCode {
     console.log(
       `Processed player ${playerId} played card ${cardId} at location (${xLocation}, ${yLocation})`,
     )
+    return this.state
   }
 
-  draft(playerId: number, cardId?: number) {
+  draft(playerId: number, cardId?: string): GameState | StatusCode {
     console.log(`Processed player ${playerId} drafted card ${cardId}`)
+    return this.state
   }
 }
 
 type PlayersJoining = 'no players' | '1 player' | '2 players' | '3 players'
-type GameState = PlayersJoining | 'ready'
+export type GameState = PlayersJoining | 'ready'
 
-type Status = { code: number }
+export type StatusCode = { kind: 'status'; code: number }
+
+const statusCode = (code: number): StatusCode => ({ kind: 'status', code })
