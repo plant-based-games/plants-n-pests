@@ -10,7 +10,19 @@ backend:
     - on play endpoint, check awaiting play to validate player
 
 frontend/client:
-- Game state 
+- Game state handler
+  - Scenes
+    - Main menu
+      - Start game
+      - Profile editor (username, etc.)
+      - Deck management?
+    - Game lobby
+      - shows you who you're playing with
+    - Draft Scene
+      - shows you the pile you can draft from
+    - Game Scene
+    - Game end scene
+      - shows you your rewards, the results, etc
 - UI
   - card mesh and assets
   - board meshes and assets
