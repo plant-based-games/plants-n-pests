@@ -5,13 +5,13 @@ export class Game {
   login(): number {
     switch (this.state) {
       case 'no players':
+        this.state = '1 player'
         return 1
       case '1 player':
+        this.state = '2 players'
         return 2
       case '2 players':
-        if (this.playerCount === 3) {
-          this.state = 'ready'
-        }
+        this.state = this.playerCount === 3 ? 'ready' : '3 players'
         return 3
       case '3 players':
         if (this.playerCount === 3) {
@@ -56,6 +56,6 @@ export type GameState = PlayersJoining | 'ready'
 
 class UserError extends Error {
   constructor(public readonly statusCode: number) {
-    super('http request user error')
+    super(`http request user error ${statusCode}`)
   }
 }
