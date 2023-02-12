@@ -41,7 +41,7 @@ const doIfValidPlayer = (req: Request, res: Response, f: (playerId: number) => S
     const gameState = f(result.data.player)
     res.send(gameState)
   } else {
-    res.status(401).end
+    res.status(401).end()
   }
 }
 

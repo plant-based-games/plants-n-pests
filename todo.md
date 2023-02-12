@@ -1,10 +1,10 @@
 backend:
-- Need to re-do GameState
-    - should always be an object with state property
 - State:
     - internal vs external
     - internal has all public and private info for all players (decks+hands of each player).
     - external: has all public info, but only has private info of client player (deck+hand).  Only public info for other players is provided (hand size & deck size).
+    - also, external includes the client player number (1,2,3 or 4)
+- login should just return an external state
 - player 1 can start game at 3 players instead of 4
 - have a awaiting draft array & awaiting play Option<Player>
     - on draft endpoint, check draft array to validate player
