@@ -12,6 +12,20 @@ Docker
     sh docker-run.sh
 
 
+Play the game!
+----------
+
+run
+    
+    cargo run
+or
+
+    firefox public/index.html
+    google-chrome public/index.html
+
+or visit the GitHub pages hosted [web version](https://plant-based-games.github.io/plantsandpests/index.html)
+
+
 Developing
 ----------
 
