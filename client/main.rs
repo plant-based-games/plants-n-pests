@@ -4,6 +4,7 @@ mod shared;
 use crate::plugins::hello_plugin::HelloPlugin;
 use bevy::app::App;
 use bevy::prelude::*;
+use web_sys;
 
 #[cfg(target_arch = "wasm32")]
 fn handle_browser_resize(mut windows: ResMut<Windows>) {
@@ -31,6 +32,7 @@ fn main() {
         ..default()
     }))
     .add_plugin(HelloPlugin);
+
     #[cfg(target_arch = "wasm32")]
     app.add_system(handle_browser_resize);
 
