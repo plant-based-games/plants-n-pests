@@ -107,7 +107,7 @@ Make sure you have the wasm compilation target & Install the WASM Bindgen
 ### Build & Package the game for WASM ###
     
     cargo build --release --target wasm32-unknown-unknown
-    wasm-bindgen --out-name plantsnpests \
+    wasm-bindgen --out-name plantsandpests \
     --out-dir public \
     --target web target/wasm32-unknown-unknown/release/client.wasm
 

@@ -644,7 +644,7 @@ mod menu {
                             align_items: AlignItems::Center,
                             ..default()
                         },
-                        background_color: Color::CRIMSON.into(),
+                        background_color: Color::DARK_GREEN.into(),
                         ..default()
                     })
                     .with_children(|parent| {
@@ -656,7 +656,7 @@ mod menu {
                                     align_items: AlignItems::Center,
                                     ..default()
                                 },
-                                background_color: Color::CRIMSON.into(),
+                                background_color: Color::DARK_GREEN.into(),
                                 ..default()
                             })
                             .with_children(|parent| {
@@ -746,7 +746,7 @@ mod menu {
                             align_items: AlignItems::Center,
                             ..default()
                         },
-                        background_color: Color::CRIMSON.into(),
+                        background_color: Color::DARK_GREEN.into(),
                         ..default()
                     })
                     .with_children(|parent| {
@@ -756,7 +756,7 @@ mod menu {
                                     align_items: AlignItems::Center,
                                     ..default()
                                 },
-                                background_color: Color::CRIMSON.into(),
+                                background_color: Color::DARK_GREEN.into(),
                                 ..default()
                             })
                             .with_children(|parent| {
