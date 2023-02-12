@@ -450,14 +450,14 @@ mod menu {
                             align_items: AlignItems::Center,
                             ..default()
                         },
-                        background_color: Color::CRIMSON.into(),
+                        background_color: Color::GREEN.into(),
                         ..default()
                     })
                     .with_children(|parent| {
                         // Display the game name
                         parent.spawn(
                             TextBundle::from_section(
-                                "Bevy Game Menu UI",
+                                "Plants & Pests",
                                 TextStyle {
                                     font: font.clone(),
                                     font_size: 80.0,
@@ -484,7 +484,7 @@ mod menu {
                                 MenuButtonAction::Play,
                             ))
                             .with_children(|parent| {
-                                let icon = asset_server.load("textures/Game Icons/right.png");
+                                let icon = asset_server.load("textures/icons/right.png");
                                 parent.spawn(ImageBundle {
                                     style: button_icon_style.clone(),
                                     image: UiImage::from(icon),
@@ -505,7 +505,7 @@ mod menu {
                                 MenuButtonAction::Settings,
                             ))
                             .with_children(|parent| {
-                                let icon = asset_server.load("textures/Game Icons/wrench.png");
+                                let icon = asset_server.load("textures/icons/wrench.png");
                                 parent.spawn(ImageBundle {
                                     style: button_icon_style.clone(),
                                     image: UiImage::from(icon),
@@ -526,7 +526,7 @@ mod menu {
                                 MenuButtonAction::Quit,
                             ))
                             .with_children(|parent| {
-                                let icon = asset_server.load("textures/Game Icons/exitRight.png");
+                                let icon = asset_server.load("textures/icons/exitRight.png");
                                 parent.spawn(ImageBundle {
                                     style: button_icon_style,
                                     image: UiImage::from(icon),
