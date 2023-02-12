@@ -32,6 +32,8 @@ fn setup(mut commands: Commands) {
 impl Plugin for StateHandlerPlugin {
     fn build(&self, app: &mut App) {
         app.add_startup_system(setup)
+            .insert_resource(DisplayQuality::Medium)
+            .insert_resource(Volume(7))
             .add_state::<GameState>(GameState::Splash)
             // Adds the plugins for each state
             .add_plugin(splash::SplashPlugin)
