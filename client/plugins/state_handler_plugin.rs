@@ -218,7 +218,7 @@ mod game {
                                     TextStyle {
                                         font: font.clone(),
                                         font_size: 60.0,
-                                        color: Color::GREEN,
+                                        color: Color::DARK_GREEN,
                                     },
                                 ),
                             ])
@@ -450,7 +450,7 @@ mod menu {
                             align_items: AlignItems::Center,
                             ..default()
                         },
-                        background_color: Color::GREEN.into(),
+                        background_color: Color::DARK_GREEN.into(),
                         ..default()
                     })
                     .with_children(|parent| {
@@ -574,7 +574,7 @@ mod menu {
                             align_items: AlignItems::Center,
                             ..default()
                         },
-                        background_color: Color::CRIMSON.into(),
+                        background_color: Color::DARK_GREEN.into(),
                         ..default()
                     })
                     .with_children(|parent| {
