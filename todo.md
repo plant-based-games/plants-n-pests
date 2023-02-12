@@ -1,7 +1,6 @@
 backend:
 - Need to re-do GameState
     - should always be an object with state property
-    - needs kind property to union with StatusCode
 - player 1 can start game at 3 players instead of 4
 - have a awaiting draft array & awaiting play Option<Player>
     - on draft endpoint, check draft array to validate player
