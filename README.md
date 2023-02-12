@@ -93,9 +93,9 @@ Make sure you have the wasm compilation target & Install the WASM Bindgen
 ### Build & Package the game for WASM ###
     
     cargo build --release --target wasm32-unknown-unknown
-    wasm-bindgen --out-name wasm_example \
-    --out-dir examples/wasm/target \
-    --target web target/wasm32-unknown-unknown/release/examples/lighting.wasm
+    wasm-bindgen --out-name plantsnpests \
+    --out-dir public \
+    --target web target/wasm32-unknown-unknown/release/client.wasm
 
 
 ### Build & run the game for your local environment ###

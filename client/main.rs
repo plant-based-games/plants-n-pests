@@ -2,6 +2,7 @@ mod plugins;
 mod shared;
 
 use crate::plugins::hello_plugin::HelloPlugin;
+use crate::plugins::state_handler_plugin::StateHandlerPlugin;
 use bevy::app::App;
 use bevy::prelude::*;
 #[cfg(target_arch = "wasm32")]
@@ -32,7 +33,8 @@ fn main() {
         },
         ..default()
     }))
-    .add_plugin(HelloPlugin);
+    .add_plugin(HelloPlugin)
+    .add_plugin(StateHandlerPlugin);
 
     #[cfg(target_arch = "wasm32")]
     app.add_system(handle_browser_resize);
