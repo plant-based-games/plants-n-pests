@@ -2,18 +2,27 @@ use bevy::prelude::*;
 use bevy::time::Timer;
 
 #[derive(Component)]
-pub struct Position {
-    pub x: f32,
-    pub y: f32,
+pub(crate) struct Position {
+    pub(crate) x: f32,
+    pub(crate) y: f32,
 }
 
 #[derive(Component)]
-pub struct Name(pub String);
+pub(crate) struct Name(pub(crate) String);
 
 #[derive(Component)]
-pub struct Plant;
+pub(crate) struct Plant;
 
-// pub struct Entity(u64);
+#[derive(Bundle)]
+pub(crate) struct PlantBundle {
+    pub(crate) name: Name,
+    pub(crate) position: Position,
+    pub(crate) _p: Plant,
+    #[bundle]
+    pub(crate) sprite: SpriteSheetBundle,
+}
+
+pub(crate) struct Entity(u64);
 
 #[derive(Resource)]
-pub struct GreetTimer(pub Timer);
+pub(crate) struct GreetTimer(pub(crate) Timer);

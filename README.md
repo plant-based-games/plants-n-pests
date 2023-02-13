@@ -108,8 +108,8 @@ Make sure you have the wasm compilation target & Install the WASM Bindgen
     
     cargo build --release --target wasm32-unknown-unknown
     wasm-bindgen --out-name plantsandpests \
-    --out-dir public \
-    --target web target/wasm32-unknown-unknown/release/client.wasm
+     --out-dir public \
+     --target web target/wasm32-unknown-unknown/release/client.wasm
 
 
 ### Build & run the game for your local environment ###
