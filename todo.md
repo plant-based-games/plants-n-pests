@@ -33,7 +33,7 @@ frontend/client:
   - menu, loading, in game, end game? 
 - Networking plugin
   - exchange game data with the server
-  - heartbeat
+  - heartbeat every second to update game state?
 - Audio?
 
 
