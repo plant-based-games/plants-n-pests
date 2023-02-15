@@ -1,3 +1,5 @@
+mod draft_plugin;
+mod endgame_plugin;
 pub(crate) mod game_plugin;
 pub(crate) mod hello_plugin;
 pub(crate) mod menu_plugin;
@@ -50,6 +52,7 @@ pub(crate) struct Entity(u64);
 pub(crate) struct GreetTimer(pub(crate) Timer);
 
 const TEXT_COLOR: Color = Color::rgb(0.9, 0.9, 0.9);
+const MENU_BACKGROUND_COLOR: Color = Color::DARK_GREEN;
 
 // Enum that will be used as a global state for the game
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash)]
@@ -57,7 +60,9 @@ enum GameState {
     #[default]
     Splash,
     Menu,
+    Draft,
     Game,
+    Endgame,
 }
 
 // One of the two settings that can be set through the menu. It will be a resource in the app

@@ -1,3 +1,5 @@
+use crate::plugins::draft_plugin::DraftPlugin;
+use crate::plugins::endgame_plugin::EndgamePlugin;
 use bevy::prelude::*;
 
 use crate::plugins::game_plugin::GamePlugin;
@@ -18,9 +20,10 @@ impl Plugin for StateHandlerPlugin {
             .insert_resource(DisplayQuality::Medium)
             .insert_resource(Volume(7))
             .add_state::<GameState>(GameState::Splash)
-            // Adds the plugins for each state
             .add_plugin(SplashPlugin)
             .add_plugin(MenuPlugin)
-            .add_plugin(GamePlugin);
+            .add_plugin(DraftPlugin)
+            .add_plugin(GamePlugin)
+            .add_plugin(EndgamePlugin);
     }
 }

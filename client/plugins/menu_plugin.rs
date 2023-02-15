@@ -1,11 +1,7 @@
 use bevy::{app::AppExit, prelude::*};
 
-use super::{despawn_screen, DisplayQuality, GameState, Volume, TEXT_COLOR};
+use super::{despawn_screen, DisplayQuality, GameState, Volume, MENU_BACKGROUND_COLOR, TEXT_COLOR};
 
-// This plugin manages the menu, with 5 different screens:
-// - a main menu with "New Game", "Settings", "Quit"
-// - a settings menu with two submenus and a back button
-// - two settings screen with a setting that can be set and a back button
 pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
@@ -201,7 +197,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: Color::DARK_GREEN.into(),
+                    background_color: MENU_BACKGROUND_COLOR.into(),
                     ..default()
                 })
                 .with_children(|parent| {
@@ -325,7 +321,7 @@ fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: Color::DARK_GREEN.into(),
+                    background_color: MENU_BACKGROUND_COLOR.into(),
                     ..default()
                 })
                 .with_children(|parent| {
@@ -393,7 +389,7 @@ fn display_settings_menu_setup(
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: Color::DARK_GREEN.into(),
+                    background_color: MENU_BACKGROUND_COLOR.into(),
                     ..default()
                 })
                 .with_children(|parent| {
@@ -405,7 +401,7 @@ fn display_settings_menu_setup(
                                 align_items: AlignItems::Center,
                                 ..default()
                             },
-                            background_color: Color::DARK_GREEN.into(),
+                            background_color: MENU_BACKGROUND_COLOR.into(),
                             ..default()
                         })
                         .with_children(|parent| {
@@ -495,7 +491,7 @@ fn sound_settings_menu_setup(
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: Color::DARK_GREEN.into(),
+                    background_color: MENU_BACKGROUND_COLOR.into(),
                     ..default()
                 })
                 .with_children(|parent| {
@@ -505,7 +501,7 @@ fn sound_settings_menu_setup(
                                 align_items: AlignItems::Center,
                                 ..default()
                             },
-                            background_color: Color::DARK_GREEN.into(),
+                            background_color: MENU_BACKGROUND_COLOR.into(),
                             ..default()
                         })
                         .with_children(|parent| {
@@ -558,7 +554,7 @@ fn menu_action(
             match menu_button_action {
                 MenuButtonAction::Quit => app_exit_events.send(AppExit),
                 MenuButtonAction::Play => {
-                    game_state.set(GameState::Game).unwrap();
+                    game_state.set(GameState::Draft).unwrap();
                     menu_state.set(MenuState::Disabled).unwrap();
                 }
                 MenuButtonAction::Settings => menu_state.set(MenuState::Settings).unwrap(),

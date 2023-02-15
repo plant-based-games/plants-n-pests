@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::{despawn_screen, DisplayQuality, GameState, Volume, TEXT_COLOR};
+use super::{despawn_screen, DisplayQuality, GameState, Volume, MENU_BACKGROUND_COLOR, TEXT_COLOR};
 
 // This plugin will contain the game. In this case, it's just be a screen that will
 // display the current settings for 5 seconds before returning to the menu
@@ -46,26 +46,21 @@ fn game_setup(
             OnGameScreen,
         ))
         .with_children(|parent| {
-            // First create a `NodeBundle` for centering what we want to display
             parent
                 .spawn(NodeBundle {
                     style: Style {
-                        // This will display its children in a column, from top to bottom
                         flex_direction: FlexDirection::Column,
-                        // `align_items` will align children on the cross axis. Here the main axis is
-                        // vertical (column), so the cross axis is horizontal. This will center the
-                        // children
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: Color::DARK_GREEN.into(),
+                    background_color: MENU_BACKGROUND_COLOR.into(),
                     ..default()
                 })
                 .with_children(|parent| {
                     // Display two lines of text, the second one with the current settings
                     parent.spawn(
                         TextBundle::from_section(
-                            "Will be back to the menu shortly...",
+                            "This will be the game screen eventually",
                             TextStyle {
                                 font: font.clone(),
                                 font_size: 80.0,
@@ -84,7 +79,7 @@ fn game_setup(
                                 TextStyle {
                                     font: font.clone(),
                                     font_size: 60.0,
-                                    color: Color::BLUE,
+                                    color: TEXT_COLOR,
                                 },
                             ),
                             TextSection::new(
@@ -100,7 +95,7 @@ fn game_setup(
                                 TextStyle {
                                     font: font.clone(),
                                     font_size: 60.0,
-                                    color: Color::DARK_GREEN,
+                                    color: TEXT_COLOR,
                                 },
                             ),
                         ])
@@ -118,6 +113,6 @@ fn game_setup(
 // Tick the timer, and change state when finished
 fn game(time: Res<Time>, mut game_state: ResMut<State<GameState>>, mut timer: ResMut<GameTimer>) {
     if timer.tick(time.delta()).finished() {
-        game_state.set(GameState::Menu).unwrap();
+        game_state.set(GameState::Endgame).unwrap();
     }
 }
