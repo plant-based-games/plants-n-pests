@@ -15,8 +15,9 @@ Docker
 Play the game!
 ----------
 
-run
+build and run locally for your machine
     
+    cargo build
     cargo run
 
 or, compile to wasm and run in a browser
