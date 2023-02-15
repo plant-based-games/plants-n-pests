@@ -10,3 +10,7 @@ coverage
 target/*
 /manual-test/cookie.txt
 /.env
+public/plantsandpests.d.ts
+public/plantsandpests.js
+public/plantsandpests_bg.wasm
+public/plantsandpests_bg.wasm.d.ts
