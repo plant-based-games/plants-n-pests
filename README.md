@@ -18,8 +18,11 @@ Play the game!
 run
     
     cargo run
-or
 
+or, compile to wasm and run in a browser
+
+    cargo build --release --target wasm32-unknown-unknown
+    wasm-bindgen --out-name plantsandpests --out-dir public --target web target/wasm32-unknown-unknown/release/client.wasm
     firefox public/index.html
     google-chrome public/index.html
 
