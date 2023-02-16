@@ -12,9 +12,9 @@ fn setup(mut commands: Commands) {
     commands.spawn(Camera2dBundle::default());
 }
 
-pub struct StateHandlerPlugin;
+pub struct ScreenHandlerPlugin;
 
-impl Plugin for StateHandlerPlugin {
+impl Plugin for ScreenHandlerPlugin {
     fn build(&self, app: &mut App) {
         app.add_startup_system(setup)
             .insert_resource(DisplayQuality::Medium)

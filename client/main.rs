@@ -2,7 +2,7 @@ mod plugins;
 
 use crate::plugins::hello_plugin::HelloPlugin;
 use crate::plugins::network_plugin::NetworkPlugin;
-use crate::plugins::state_handler_plugin::StateHandlerPlugin;
+use crate::plugins::state_handler_plugin::ScreenHandlerPlugin;
 
 use bevy::app::App;
 use bevy::prelude::*;
@@ -37,7 +37,7 @@ fn main() {
     }))
     .add_plugin(HelloPlugin)
     .add_plugin(NetworkPlugin)
-    .add_plugin(StateHandlerPlugin);
+    .add_plugin(ScreenHandlerPlugin);
 
     #[cfg(target_arch = "wasm32")]
     app.add_system(handle_browser_resize);
