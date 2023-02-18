@@ -4,9 +4,10 @@ backend:
     - internal has all public and private info for all players (decks+hands of each player).
     - external: has all public info, but only has private info of client player (deck+hand).  Only public info for other players is provided (hand size & deck size).
     - also, external includes the client player number (1,2,3 or 4)
+    - have externalize function to transform internal state to external state
 - login should just return an external state
 - player 1 can start game at 3 players instead of 4
-- have a awaiting draft array & awaiting play Option<Player>
+- have an awaiting draft array & awaiting play Option<Player>
     - on draft endpoint, check draft array to validate player
     - on play endpoint, check awaiting play to validate player
 
@@ -114,7 +115,7 @@ Goal: grow plants to sell for money (victory points) at the market or to satisfy
 ### Communication ###
 
 - When waiting for other players, frontend calls GET pollState every 1 second and updates view with new GameState.
-- When current players turn, once play makes choice, frontend calls appropriate endpoint to update game state
+- When current player's turn, once the player makes their choice, frontend calls appropriate endpoint to update game state
     - draft
     - play
     - play-contract
