@@ -56,7 +56,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             });
         });
     // Insert the timer as a resource
-    commands.insert_resource(SplashTimer(Timer::from_seconds(5.0, TimerMode::Once)));
+    commands.insert_resource(SplashTimer(Timer::from_seconds(2.0, TimerMode::Once)));
 }
 
 // Tick the timer, and change state when finished
