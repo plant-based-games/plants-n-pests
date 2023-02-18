@@ -1,6 +1,5 @@
 import express, { Express, Request, Response } from 'express'
 import cookieSession from 'cookie-session'
-import { hello } from './hello.js'
 import * as dotenv from 'dotenv'
 import { z } from 'zod'
 import { Game, State } from './game.js'
@@ -14,8 +13,6 @@ type Player = z.infer<typeof Player>
 type Cookie = z.infer<typeof Cookie>
 
 const config = loadConfig(process.env)
-
-console.log(hello())
 
 const app: Express = express()
 app.disable('x-powered-by')
