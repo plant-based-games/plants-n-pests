@@ -12,10 +12,16 @@ const Cookie = z.object({ player: Player })
 type Player = z.infer<typeof Player>
 type Cookie = z.infer<typeof Cookie>
 
-const cookieSecret = process.env['cookie_secret']
-if (cookieSecret === undefined) {
-  throw new Error('cookie_secret env var is undefined :(')
+const getEnv = (name: string): string => {
+  const value = process.env[name]
+  if (value === undefined) {
+    throw new Error(`${name} env var is undefined :(`)
+  }
+  return value
 }
+
+const cookieSecret = getEnv('cookie_secret')
+const playerCount = getEnv('player_count')
 
 console.log(hello())
 
@@ -33,7 +39,7 @@ app.use(
 )
 const port = 8000
 
-const game = new Game()
+const game = new Game(parseInt(playerCount) as 3 | 4)
 
 const doIfValidPlayer = (req: Request, res: Response, f: (playerId: number) => State) => {
   const result = Cookie.safeParse(req.session)

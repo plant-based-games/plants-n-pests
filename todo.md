@@ -6,7 +6,6 @@ backend:
     - also, external includes the client player number (1,2,3 or 4)
     - have externalize function to transform internal state to external state
 - login should just return an external state
-- player 1 can start game at 3 players instead of 4
 - have an awaiting draft array & awaiting play Option<Player>
     - on draft endpoint, check draft array to validate player
     - on play endpoint, check awaiting play to validate player
@@ -107,9 +106,8 @@ Goal: grow plants to sell for money (victory points) at the market or to satisfy
 
 - index.html loads html/js/css/wasm
 - call login to get cookie
-- If 1st player, can select 3 or 4 player game (call set-player-count)
 - All players can see number of players joined so far
-- once all players have called login, start game
+- once all players have called login (3 or 4 players, configured in .env player_count env var), start game
 
 
 ### Communication ###

@@ -52,6 +52,7 @@ Define a secret for cookie signing.
     pwgen -sy 48 >> .env
 
 Edit .env file to set cookie_secret
+and set the player_count to 3 or 4 players.
 
 
 ### Build ###

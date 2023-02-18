@@ -1,6 +1,7 @@
 export class Game {
   private state: State = new PlayersJoining(0)
-  private playerCount: 3 | 4 = 4
+
+  constructor(private readonly playerCount: 3 | 4) {}
 
   login(): number {
     if (this.state.stateName !== 'players-joining') {
