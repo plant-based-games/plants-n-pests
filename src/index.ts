@@ -4,6 +4,7 @@ import { hello } from './hello.js'
 import * as dotenv from 'dotenv'
 import { z } from 'zod'
 import { Game, State } from './game.js'
+import { loadConfig } from './config.js'
 
 dotenv.config()
 
@@ -12,16 +13,7 @@ const Cookie = z.object({ player: Player })
 type Player = z.infer<typeof Player>
 type Cookie = z.infer<typeof Cookie>
 
-const getEnv = (name: string): string => {
-  const value = process.env[name]
-  if (value === undefined) {
-    throw new Error(`${name} env var is undefined :(`)
-  }
-  return value
-}
-
-const cookieSecret = getEnv('cookie_secret')
-const playerCount = getEnv('player_count')
+const config = loadConfig()
 
 console.log(hello())
 
@@ -32,14 +24,14 @@ app.use(express.json())
 app.use(
   cookieSession({
     name: 'session',
-    keys: [cookieSecret],
+    keys: [config.cookieSecret],
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   }),
 )
 const port = 8000
 
-const game = new Game(parseInt(playerCount) as 3 | 4)
+const game = new Game(config.playerCount)
 
 const doIfValidPlayer = (req: Request, res: Response, f: (playerId: number) => State) => {
   const result = Cookie.safeParse(req.session)
