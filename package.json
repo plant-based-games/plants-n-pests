@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
-    "start-dev": "ts-node-esm src/index.ts",
+    "dev": "ts-node-esm src/index.ts",
     "test": "jest --coverage",
     "fmt": "prettier --write '*.yaml' '*.json'",
     "fmtcheck": "prettier --check '*.yaml' '*.json'",

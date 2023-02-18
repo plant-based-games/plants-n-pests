@@ -69,7 +69,7 @@ and set the player_count to 3 or 4 players.
 
 While developing, you can skip building by using tsnode.
 
-    npm run start-dev
+    npm run dev
 
 
 ### Format, lint, build, test ###
