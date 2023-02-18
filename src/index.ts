@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv'
 import { z } from 'zod'
 import { Game, State } from './game.js'
 import { loadConfig } from './config.js'
+import { cardLibrary } from './card-library.js'
 
 dotenv.config()
 
@@ -66,6 +67,10 @@ app.post('/play/:cardId/:xLocation/:yLocation', (req: Request, res: Response) =>
 
 app.post('/draft/:cardId', (req: Request, res: Response) => {
   doIfValidPlayer(req, res, (playerId) => game.draft(playerId, req.params['cardId']))
+})
+
+app.get('/card-library', (_req: Request, res: Response) => {
+  res.send(cardLibrary)
 })
 
 app.listen(port, () => {

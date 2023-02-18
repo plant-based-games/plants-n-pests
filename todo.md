@@ -108,6 +108,7 @@ Goal: grow plants to sell for money (victory points) at the market or to satisfy
 - call login to get cookie
 - All players can see number of players joined so far
 - once all players have called login (3 or 4 players, configured in .env player_count env var), start game
+- download the card-library GET /card-library
 
 
 ### Communication ###
