@@ -1,7 +1,7 @@
 use bevy::{app::AppExit, prelude::*};
 
 use super::{
-    button_system, despawn_screen, DisplayQuality, GameState, SelectedOption, Volume,
+    button_system, despawn, DisplayQuality, GameState, SelectedOption, Volume,
     MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR,
 };
 pub struct MenuPlugin;
@@ -17,7 +17,7 @@ impl Plugin for MenuPlugin {
             // Systems to handle the main menu screen
             .add_system_set(SystemSet::on_enter(MenuState::Main).with_system(main_menu_setup))
             .add_system_set(
-                SystemSet::on_exit(MenuState::Main).with_system(despawn_screen::<OnMainMenuScreen>),
+                SystemSet::on_exit(MenuState::Main).with_system(despawn::<OnMainMenuScreen>),
             )
             // Systems to handle the settings menu screen
             .add_system_set(
@@ -25,7 +25,7 @@ impl Plugin for MenuPlugin {
             )
             .add_system_set(
                 SystemSet::on_exit(MenuState::Settings)
-                    .with_system(despawn_screen::<OnSettingsMenuScreen>),
+                    .with_system(despawn::<OnSettingsMenuScreen>),
             )
             // Systems to handle the display settings screen
             .add_system_set(
@@ -38,7 +38,7 @@ impl Plugin for MenuPlugin {
             )
             .add_system_set(
                 SystemSet::on_exit(MenuState::SettingsDisplay)
-                    .with_system(despawn_screen::<OnDisplaySettingsMenuScreen>),
+                    .with_system(despawn::<OnDisplaySettingsMenuScreen>),
             )
             // Systems to handle the sound settings screen
             .add_system_set(
@@ -51,7 +51,7 @@ impl Plugin for MenuPlugin {
             )
             .add_system_set(
                 SystemSet::on_exit(MenuState::SettingsSound)
-                    .with_system(despawn_screen::<OnSoundSettingsMenuScreen>),
+                    .with_system(despawn::<OnSoundSettingsMenuScreen>),
             )
             // Common systems to all screens that handles buttons behaviour
             .add_system_set(

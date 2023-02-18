@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::{despawn_screen, GameState, MENU_BACKGROUND_COLOR, TEXT_COLOR};
+use super::{despawn, GameState, MENU_BACKGROUND_COLOR, TEXT_COLOR};
 
 pub struct EndgamePlugin;
 
@@ -9,8 +9,7 @@ impl Plugin for EndgamePlugin {
         app.add_system_set(SystemSet::on_enter(GameState::Endgame).with_system(splash_setup))
             .add_system_set(SystemSet::on_update(GameState::Endgame).with_system(countdown))
             .add_system_set(
-                SystemSet::on_exit(GameState::Endgame)
-                    .with_system(despawn_screen::<OnEndgameScreen>),
+                SystemSet::on_exit(GameState::Endgame).with_system(despawn::<OnEndgameScreen>),
             );
     }
 }

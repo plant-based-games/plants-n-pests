@@ -20,6 +20,9 @@ pub(crate) struct Position {
 pub(crate) struct Name(pub(crate) String);
 
 #[derive(Component)]
+pub(crate) struct PlayerId(pub(crate) String);
+
+#[derive(Component)]
 pub(crate) struct Plant;
 
 #[derive(Component)]
@@ -33,6 +36,16 @@ pub(crate) struct PlantBundle {
     pub(crate) value: Value,
     #[bundle]
     pub(crate) sprite: SpriteSheetBundle,
+}
+
+#[derive(Component)]
+pub(crate) struct Player;
+
+#[derive(Bundle)]
+pub(crate) struct PlayerBundle {
+    pub(crate) name: Name,
+    pub(crate) id: PlayerId,
+    pub(crate) _type: Player,
 }
 
 #[derive(Component)]
@@ -89,7 +102,6 @@ fn button_system(
     }
 }
 
-// One of the two settings that can be set through the menu. It will be a resource in the app
 #[derive(Resource, Debug, Component, PartialEq, Eq, Clone, Copy)]
 enum DisplayQuality {
     Low,
@@ -97,11 +109,10 @@ enum DisplayQuality {
     High,
 }
 
-// One of the two settings that can be set through the menu. It will be a resource in the app
 #[derive(Resource, Debug, Component, PartialEq, Eq, Clone, Copy)]
 struct Volume(u32);
 
-fn despawn_screen<T: bevy::prelude::Component>(
+fn despawn<T: bevy::prelude::Component>(
     to_despawn: Query<bevy::prelude::Entity, With<T>>,
     mut commands: Commands,
 ) {
