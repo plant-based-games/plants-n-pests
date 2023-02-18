@@ -13,7 +13,7 @@ const Cookie = z.object({ player: Player })
 type Player = z.infer<typeof Player>
 type Cookie = z.infer<typeof Cookie>
 
-const config = loadConfig()
+const config = loadConfig(process.env)
 
 console.log(hello())
 

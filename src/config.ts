@@ -9,8 +9,10 @@ export const Config = z.object({
 })
 
 type Raw<T> = Record<keyof T, unknown>
+type Env = Record<string, string | undefined>
 
-export const loadConfig = (): Config => {
+export const loadConfig = (env: Env): Config => {
+  const getEnv = getEnvFactory(env)
   const raw: Raw<Config> = {
     cookieSecret: getEnv('cookie_secret'),
     playerCount: getEnv('player_count'),
@@ -18,10 +20,12 @@ export const loadConfig = (): Config => {
   return Config.parse(raw)
 }
 
-const getEnv = (name: string): string => {
-  const value = process.env[name]
-  if (value === undefined) {
-    throw new Error(`${name} env var is undefined :(`)
+const getEnvFactory =
+  (env: Env) =>
+  (name: string): string => {
+    const value = env[name]
+    if (value === undefined) {
+      throw new Error(`${name} env var is undefined :(`)
+    }
+    return value
   }
-  return value
-}
