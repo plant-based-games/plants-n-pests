@@ -11,6 +11,20 @@ describe('loadConfig', () => {
     expect(loadConfig(env)).toStrictEqual({
       cookieSecret: makeSecret(),
       playerCount: 3,
+      seed: undefined,
+    })
+  })
+
+  it('also loads optional seed env var, if present', () => {
+    const env = {
+      cookie_secret: makeSecret(),
+      player_count: '3',
+      seed: '7777',
+    }
+    expect(loadConfig(env)).toStrictEqual({
+      cookieSecret: makeSecret(),
+      playerCount: 3,
+      seed: 7777,
     })
   })
 
@@ -42,5 +56,23 @@ describe('loadConfig', () => {
       player_count: '2',
     }
     expect(() => loadConfig(env)).toThrow(/Invalid literal/)
+  })
+
+  it('fails if seed is present but not a number', () => {
+    const env = {
+      cookie_secret: makeSecret(),
+      player_count: '3',
+      seed: 'not-a-number',
+    }
+    expect(() => loadConfig(env)).toThrow(/Expected number, received nan/)
+  })
+
+  it('fails if seed is present but less than 9', () => {
+    const env = {
+      cookie_secret: makeSecret(),
+      player_count: '3',
+      seed: '8',
+    }
+    expect(() => loadConfig(env)).toThrow(/Number must be greater than or equal to 9/)
   })
 })

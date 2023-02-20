@@ -1,13 +1,16 @@
 import { z } from 'zod'
 import type { Infer } from './zod-helper'
 
-type Config = Infer<typeof Config>
-
 export const Config = z.object({
   cookieSecret: z.string().min(40),
   playerCount: z.preprocess((v) => Number(v), z.union([z.literal(3), z.literal(4)])),
+  seed: z.preprocess(
+    (v) => (v === undefined ? v : Number(v)),
+    z.number().int().positive().min(9).optional(),
+  ),
 })
 
+type Config = Infer<typeof Config>
 type Raw<T> = Record<keyof T, unknown>
 type Env = Record<string, string | undefined>
 
@@ -16,6 +19,7 @@ export const loadConfig = (env: Env): Config => {
   const raw: Raw<Config> = {
     cookieSecret: getEnv('cookie_secret'),
     playerCount: getEnv('player_count'),
+    seed: env['seed'],
   }
   return Config.parse(raw)
 }
