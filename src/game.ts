@@ -1,7 +1,25 @@
-export class Game {
+import type { Config } from './config'
+import type { Deck, Market } from './model'
+import { generateDraftDeck, generateMarket, makeChance } from './random'
+
+export const makeGame = (config: Config): Game => {
+  const chance = makeChance(config.seed)
+  const market = generateMarket(chance)
+  const draftDeck = generateDraftDeck(chance)
+  return new Game(config.playerCount, market, draftDeck)
+}
+
+class Game {
   private state: State = new PlayersJoining(0)
 
-  constructor(private readonly playerCount: 3 | 4) {}
+  constructor(
+    private readonly playerCount: 3 | 4,
+    private readonly market: Market,
+    private readonly draftDeck: Deck,
+  ) {
+    console.log(this.market)
+    console.log(this.draftDeck)
+  }
 
   login(): number {
     if (this.state.stateName !== 'players-joining') {

@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express'
 import cookieSession from 'cookie-session'
 import * as dotenv from 'dotenv'
 import { z } from 'zod'
-import { Game, State } from './game.js'
+import { makeGame, State } from './game.js'
 import { loadConfig } from './config.js'
 import { cardLibrary } from './card-library.js'
 
@@ -29,7 +29,7 @@ app.use(
 )
 const port = 8000
 
-const game = new Game(config.playerCount)
+const game = makeGame(config)
 
 const doIfValidPlayer = (req: Request, res: Response, f: (playerId: number) => State) => {
   const result = Cookie.safeParse(req.session)

@@ -10,7 +10,7 @@ export const Config = z.object({
   ),
 })
 
-type Config = Infer<typeof Config>
+export type Config = Infer<typeof Config>
 type Raw<T> = Record<keyof T, unknown>
 type Env = Record<string, string | undefined>
 

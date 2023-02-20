@@ -1,11 +1,11 @@
 /*
 type Hand = number[]
-type Deck = number[]
 type DeployedTerrain = { terrainId: number, plantId?: number }
 type Slot = { terrain?: DeployedTerrain }
 type Garden = Slot[][]
 type CardType = 'terrain' | 'plant' | 'contract'
 */
+export type Deck = ReadonlyArray<number>
 export type Market = Record<PlantType, number>
 
 type TerrainType = 'prairie' | 'desert' | 'jungle' | 'mountain' | 'lake'
