@@ -6,8 +6,15 @@ type Slot = { terrain?: DeployedTerrain }
 type Garden = Slot[][]
 type CardType = 'terrain' | 'plant' | 'contract'
 */
-type PlantType = 'carrot' | 'celery' | 'melon' | 'tomato' | 'sunflower'
 type TerrainType = 'prairie' | 'desert' | 'jungle' | 'mountain' | 'lake'
+type PlantType =
+  | 'carrot'
+  | 'celery'
+  | 'melon'
+  | 'tomato'
+  | 'sunflower'
+  | 'potato'
+  | 'cactus'
 
 export type Card = TerrainCard | PlantCard | ContractCard
 
