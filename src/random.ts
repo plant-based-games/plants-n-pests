@@ -1,6 +1,6 @@
 import { Chance } from 'chance'
-import { cardLibrary } from './card-library'
-import type { Deck, Market } from './model'
+import { cardLibrary } from './card-library.js'
+import type { Deck, Market } from './model.js'
 
 export const makeChance = (seed: number | undefined): Chance.Chance =>
   seed === undefined ? Chance() : Chance(seed)

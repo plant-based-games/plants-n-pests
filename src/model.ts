@@ -5,7 +5,7 @@ type Slot = { terrain?: DeployedTerrain }
 type Garden = Slot[][]
 type CardType = 'terrain' | 'plant' | 'contract'
 */
-export type Deck = ReadonlyArray<number>
+export type Deck = number[]
 export type Market = Record<PlantType, number>
 
 type TerrainType = 'prairie' | 'desert' | 'jungle' | 'mountain' | 'lake'

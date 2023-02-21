@@ -1,6 +1,6 @@
-import type { Config } from './config'
-import type { Deck, Market } from './model'
-import { generateDraftDeck, generateMarket, makeChance } from './random'
+import type { Config } from './config.js'
+import type { Deck, Market } from './model.js'
+import { generateDraftDeck, generateMarket, makeChance } from './random.js'
 
 export const makeGame = (config: Config): Game => {
   const chance = makeChance(config.seed)
@@ -75,10 +75,6 @@ class PlayersJoining {
     return new PlayersJoining((this.count + 1) as 3)
   }
 }
-
-/*
-class GameState {}
-*/
 
 class DraftPhase {
   public readonly stateName: 'draftPhase' = 'draftPhase' as const
