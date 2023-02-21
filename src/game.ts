@@ -1,5 +1,5 @@
 import type { Config } from './config.js'
-import type { Deck, Market } from './model.js'
+import type { Deck, Garden, Hand, Market } from './model.js'
 import { generateDraftDeck, generateMarket, makeChance } from './random.js'
 
 export const makeGame = (config: Config): Game => {
@@ -31,13 +31,14 @@ class Game {
         this.state = this.state.increment()
         return this.state.count
       case 2:
-        this.state = this.playerCount === 3 ? new DraftPhase() : this.state.increment()
+        this.state =
+          this.playerCount === 3 ? this.initDraftPhase() : this.state.increment()
         return 3
       case 3:
         if (this.playerCount === 3) {
           throw new UserError(400)
         }
-        this.state = new DraftPhase()
+        this.state = this.initDraftPhase()
         return 4
     }
   }
@@ -62,6 +63,10 @@ class Game {
     console.log(`Processed player ${playerId} drafted card ${cardId}`)
     return this.state
   }
+
+  private initDraftPhase(): DraftPhase {
+    return new DraftPhase(this.market, [], [])
+  }
 }
 
 class PlayersJoining {
@@ -78,6 +83,10 @@ class PlayersJoining {
 
 class DraftPhase {
   public readonly stateName: 'draftPhase' = 'draftPhase' as const
+
+  constructor(market: Market, playerHands: Hand[], garden: Garden) {
+    console.log(market, playerHands, garden)
+  }
 }
 
 class RoundPhase {
