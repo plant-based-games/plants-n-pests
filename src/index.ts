@@ -69,6 +69,10 @@ app.post('/draft/:cardId', (req: Request, res: Response) => {
   doIfValidPlayer(req, res, (playerId) => game.draft(playerId, req.params['cardId']))
 })
 
+app.post('/heartbeat', (req: Request, res: Response) => {
+  doIfValidPlayer(req, res, (playerId) => game.getState())
+})
+
 app.get('/card-library', (_req: Request, res: Response) => {
   res.send(cardLibrary)
 })

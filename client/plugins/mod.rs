@@ -66,6 +66,7 @@ pub(crate) struct GreetTimer(pub(crate) Timer);
 
 const TEXT_COLOR: Color = Color::rgb(0.9, 0.9, 0.9);
 const MENU_BACKGROUND_COLOR: Color = Color::DARK_GREEN;
+const BASEURL: &str = "localhost:8080";
 
 // Enum that will be used as a global state for the game
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash)]

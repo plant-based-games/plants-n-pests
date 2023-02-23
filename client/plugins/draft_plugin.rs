@@ -8,10 +8,7 @@ impl Plugin for DraftPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(DraftTimer(Timer::from_seconds(10.0, TimerMode::Once)))
             .add_system_set(SystemSet::on_enter(GameState::Draft).with_system(splash_setup))
-            .add_system_set(
-                SystemSet::on_update(GameState::Draft)
-                    .with_system(countdown)
-            )
+            .add_system_set(SystemSet::on_update(GameState::Draft).with_system(countdown))
             .add_system_set(
                 SystemSet::on_update(GameState::Draft)
                     .with_system(countdown_update)
@@ -23,8 +20,7 @@ impl Plugin for DraftPlugin {
                     .with_system(button_system),
             )
             .add_system_set(
-                SystemSet::on_exit(GameState::Draft)
-                    .with_system(despawn::<OnDraftScreen>)
+                SystemSet::on_exit(GameState::Draft).with_system(despawn::<OnDraftScreen>),
             );
     }
 }
@@ -138,7 +134,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             ..default()
                         }),
                         RemainingTime,
-                        OnDraftScreen
+                        OnDraftScreen,
                     ));
                 });
         });
@@ -165,7 +161,7 @@ fn countdown_update(
             ..default()
         }),
         RemainingTime,
-        OnDraftScreen
+        OnDraftScreen,
     ));
 }
 

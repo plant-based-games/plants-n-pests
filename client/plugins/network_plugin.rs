@@ -1,6 +1,7 @@
+use crate::HTTPClient;
 use bevy::prelude::*;
 
-use super::{Name, Player, PlayerBundle, PlayerId};
+use super::{Name, Player, PlayerBundle, PlayerId, BASEURL};
 pub struct NetworkPlugin;
 
 #[derive(Resource)]
@@ -19,13 +20,23 @@ impl Plugin for NetworkPlugin {
 
 fn heartbeat(
     time: Res<Time>,
+    client: Res<HTTPClient>,
     mut timer: ResMut<HeartbeatTimer>,
     query: Query<&Name, With<Player>>,
 ) {
     if timer.0.tick(time.delta()).just_finished() {
         for name in query.iter() {
             println!("hello {}!", name.0);
-            //TODO: Send heartbeat request
+        }
+        if let Ok(res) = client
+            .0
+            .post(format!("{}{}", BASEURL, "/heartbeat"))
+            .body("hi")
+            .send()
+        {
+            println!("response status: {}!", res.status());
+        } else {
+            println!("HEARTBEAT ERROR");
         }
     }
 }

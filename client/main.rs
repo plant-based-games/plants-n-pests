@@ -3,9 +3,13 @@ mod plugins;
 use crate::plugins::hello_plugin::HelloPlugin;
 use crate::plugins::network_plugin::NetworkPlugin;
 use crate::plugins::state_handler_plugin::ScreenHandlerPlugin;
-
 use bevy::app::App;
 use bevy::prelude::*;
+use bevy::utils::futures;
+use reqwest::blocking::*;
+use reqwest::cookie::Cookie;
+
+const BASEURL: &str = "localhost:8080";
 
 #[cfg(target_arch = "wasm32")]
 use web_sys;
@@ -23,21 +27,67 @@ fn handle_browser_resize(mut windows: ResMut<Windows>) {
     }
 }
 
+#[derive(Resource)]
+struct PlayerSettings {
+    cookie_secret: String,
+}
+
+#[derive(Resource)]
+struct HTTPClient(Client);
+
+impl FromWorld for PlayerSettings {
+    fn from_world(world: &mut World) -> Self {
+        if let Some(client) = world.get_resource::<HTTPClient>() {
+            if let Ok(res) = client
+                .0
+                .post(format!("{}{}", BASEURL, "/login"))
+                .body("hi")
+                .send()
+            {
+                let mut cookies = res.cookies();
+                if let Some(cookie) = cookies.find(|c| c.name() == "cookie") {
+                    println!("SUCCESSFUL LOGIN");
+                    PlayerSettings {
+                        cookie_secret: cookie.value().to_string(),
+                    }
+                } else {
+                    println!("ERROR LOGGING IN");
+                    PlayerSettings {
+                        cookie_secret: String::from("NOCOOKIEFOUND"),
+                    }
+                }
+            } else {
+                println!("ERROR LOGGING IN");
+                PlayerSettings {
+                    cookie_secret: String::from("NOCOOKIEFOUND"),
+                }
+            }
+        } else {
+            println!("ERROR LOGGING IN");
+            PlayerSettings {
+                cookie_secret: String::from("NOCOOKIEFOUND"),
+            }
+        }
+    }
+}
+
 fn main() {
     let mut app = App::new();
 
-    app.add_plugins(DefaultPlugins.set(WindowPlugin {
-        window: WindowDescriptor {
-            title: String::from("Plants & Pests"),
-            resizable: true,
-            fit_canvas_to_parent: true,
+    app.insert_resource(HTTPClient(Client::new()))
+        .init_resource::<PlayerSettings>()
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            window: WindowDescriptor {
+                title: String::from("Plants & Pests"),
+                resizable: true,
+                fit_canvas_to_parent: true,
+                ..default()
+            },
             ..default()
-        },
-        ..default()
-    }))
-    .add_plugin(HelloPlugin)
-    .add_plugin(NetworkPlugin)
-    .add_plugin(ScreenHandlerPlugin);
+        }))
+        .add_plugin(HelloPlugin)
+        .add_plugin(NetworkPlugin)
+        .add_plugin(ScreenHandlerPlugin);
 
     #[cfg(target_arch = "wasm32")]
     app.add_system(handle_browser_resize);
