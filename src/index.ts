@@ -70,7 +70,10 @@ app.post('/draft/:cardId', (req: Request, res: Response) => {
 })
 
 app.post('/heartbeat', (req: Request, res: Response) => {
-  doIfValidPlayer(req, res, (playerId) => game.getState())
+  doIfValidPlayer(req, res, (playerId) => {
+    console.log("player " + playerId + " connected");
+   return game.getState()
+  })
 })
 
 app.get('/card-library', (_req: Request, res: Response) => {
