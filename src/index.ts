@@ -71,7 +71,7 @@ app.post('/draft/:cardId', (req: Request, res: Response) => {
 
 app.post('/heartbeat', (req: Request, res: Response) => {
   doIfValidPlayer(req, res, (playerId) => {
-    console.log('player ' + playerId + ' connected');
+    console.log('player ' + playerId + ' connected')
     return game.getState()
   })
 })
