@@ -33,7 +33,8 @@ frontend/client:
   - menu, loading, in game, end game? 
 - Networking plugin
   - exchange game data with the server
-  - heartbeat every second to update game state?
+  - switching to naia for the http client because reqwest::blocking can't compile to wasm
+  - bevy's runtime conflicts with reqwest's async runtime (tokio) but it should be possible to make them play nice
 - Audio?
 
 
