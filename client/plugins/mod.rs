@@ -69,7 +69,7 @@ const MENU_BACKGROUND_COLOR: Color = Color::DARK_GREEN;
 const BASEURL: &str = "localhost:8080";
 
 // Enum that will be used as a global state for the game
-#[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash)]
+#[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
 enum GameState {
     #[default]
     Splash,

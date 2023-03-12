@@ -19,7 +19,7 @@ impl Plugin for ScreenHandlerPlugin {
         app.add_startup_system(setup)
             .insert_resource(DisplayQuality::Medium)
             .insert_resource(Volume(7))
-            .add_state::<GameState>(GameState::Splash)
+            .add_state::<GameState>()
             .add_plugin(SplashPlugin)
             .add_plugin(MenuPlugin)
             .add_plugin(DraftPlugin)

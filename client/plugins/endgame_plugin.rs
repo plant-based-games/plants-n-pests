@@ -6,10 +6,10 @@ pub struct EndgamePlugin;
 
 impl Plugin for EndgamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_system_set(SystemSet::on_enter(GameState::Endgame).with_system(splash_setup))
-            .add_system_set(SystemSet::on_update(GameState::Endgame).with_system(countdown))
-            .add_system_set(
-                SystemSet::on_exit(GameState::Endgame).with_system(despawn::<OnEndgameScreen>),
+        app.add_system(splash_setup.in_schedule(OnEnter(GameState::Endgame)))
+            .add_system(countdown.in_set(OnUpdate(GameState::Endgame)))
+            .add_system(
+                despawn::<OnEndgameScreen>.in_schedule(OnExit(GameState::Endgame)),
             );
     }
 }
@@ -68,11 +68,11 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 }
 
 fn countdown(
-    mut game_state: ResMut<State<GameState>>,
+    mut game_state: ResMut<NextState<GameState>>,
     time: Res<Time>,
     mut timer: ResMut<EndgameTimer>,
 ) {
     if timer.tick(time.delta()).finished() {
-        game_state.set(GameState::Menu).unwrap();
+        game_state.set(GameState::Menu);
     }
 }

@@ -7,21 +7,13 @@ pub struct DraftPlugin;
 impl Plugin for DraftPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(DraftTimer(Timer::from_seconds(10.0, TimerMode::Once)))
-            .add_system_set(SystemSet::on_enter(GameState::Draft).with_system(splash_setup))
-            .add_system_set(SystemSet::on_update(GameState::Draft).with_system(countdown))
-            .add_system_set(
-                SystemSet::on_update(GameState::Draft)
-                    .with_system(countdown_update)
-                    .with_system(despawn::<RemainingTime>),
-            )
-            .add_system_set(
-                SystemSet::on_update(GameState::Draft)
-                    .with_system(draft_actions)
-                    .with_system(button_system),
-            )
-            .add_system_set(
-                SystemSet::on_exit(GameState::Draft).with_system(despawn::<OnDraftScreen>),
-            );
+            .add_system(splash_setup.in_schedule(OnEnter(GameState::Draft)))
+            .add_system(countdown.in_set(OnUpdate(GameState::Draft)))
+            .add_system(countdown_update.in_set(OnUpdate(GameState::Draft)))
+            .add_system(despawn::<RemainingTime>.in_set(OnUpdate(GameState::Draft)))
+            .add_system(draft_actions.in_set(OnUpdate(GameState::Draft)))
+            .add_system(button_system.in_set(OnUpdate(GameState::Draft)))
+            .add_system(despawn::<OnDraftScreen>.in_schedule(OnExit(GameState::Draft)));
     }
 }
 
@@ -166,12 +158,12 @@ fn countdown_update(
 }
 
 fn countdown(
-    mut game_state: ResMut<State<GameState>>,
+    mut game_state: ResMut<NextState<GameState>>,
     time: Res<Time>,
     mut timer: ResMut<DraftTimer>,
 ) {
     if timer.tick(time.delta()).finished() {
-        game_state.set(GameState::Game).unwrap();
+        game_state.set(GameState::Game);
     }
 }
 
@@ -180,13 +172,13 @@ fn draft_actions(
         (&Interaction, &DraftButtonActions),
         (Changed<Interaction>, With<Button>),
     >,
-    mut game_state: ResMut<State<GameState>>,
+    mut game_state: ResMut<NextState<GameState>>,
 ) {
     for (interaction, button_action) in &interaction_query {
         if *interaction == Interaction::Clicked {
             match button_action {
                 DraftButtonActions::Ready => {
-                    game_state.set(GameState::Game).unwrap();
+                    game_state.set(GameState::Game);
                 }
             }
         }

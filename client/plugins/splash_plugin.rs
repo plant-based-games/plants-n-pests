@@ -10,13 +10,11 @@ impl Plugin for SplashPlugin {
         // As this plugin is managing the splash screen, it will focus on the state `GameState::Splash`
         app
             // When entering the state, spawn everything needed for this screen
-            .add_system_set(SystemSet::on_enter(GameState::Splash).with_system(splash_setup))
+            .add_system(splash_setup.in_schedule(OnEnter(GameState::Splash)))
             // While in this state, run the `countdown` system
-            .add_system_set(SystemSet::on_update(GameState::Splash).with_system(countdown))
+            .add_system(countdown.in_set(OnUpdate(GameState::Splash)))
             // When exiting the state, despawn everything that was spawned for this screen
-            .add_system_set(
-                SystemSet::on_exit(GameState::Splash).with_system(despawn::<OnSplashScreen>),
-            );
+            .add_system(despawn::<OnSplashScreen>.in_schedule(OnExit(GameState::Splash)));
     }
 }
 
@@ -61,11 +59,11 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
 // Tick the timer, and change state when finished
 fn countdown(
-    mut game_state: ResMut<State<GameState>>,
+    mut game_state: ResMut<NextState<GameState>>,
     time: Res<Time>,
     mut timer: ResMut<SplashTimer>,
 ) {
     if timer.tick(time.delta()).finished() {
-        game_state.set(GameState::Menu).unwrap();
+        game_state.set(GameState::Menu);
     }
 }

@@ -8,10 +8,10 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_system_set(SystemSet::on_enter(GameState::Game).with_system(game_setup))
-            .add_system_set(SystemSet::on_update(GameState::Game).with_system(game))
-            .add_system_set(
-                SystemSet::on_exit(GameState::Game).with_system(despawn::<OnGameScreen>),
+        app.add_system(game_setup.in_schedule(OnEnter(GameState::Game)))
+            .add_system(game.in_set(OnUpdate(GameState::Game)))
+            .add_system(
+                despawn::<OnGameScreen>.in_schedule(OnExit(GameState::Game)),
             );
     }
 }
@@ -111,8 +111,8 @@ fn game_setup(
 }
 
 // Tick the timer, and change state when finished
-fn game(time: Res<Time>, mut game_state: ResMut<State<GameState>>, mut timer: ResMut<GameTimer>) {
+fn game(time: Res<Time>, mut game_state: ResMut<NextState<GameState>>, mut timer: ResMut<GameTimer>) {
     if timer.tick(time.delta()).finished() {
-        game_state.set(GameState::Endgame).unwrap();
+        game_state.set(GameState::Endgame);
     }
 }

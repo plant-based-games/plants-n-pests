@@ -1,3 +1,6 @@
+#![forbid(unsafe_code)]
+
+mod browser_client;
 mod plugins;
 
 use crate::plugins::hello_plugin::HelloPlugin;
@@ -5,7 +8,6 @@ use crate::plugins::network_plugin::NetworkPlugin;
 use crate::plugins::state_handler_plugin::ScreenHandlerPlugin;
 use bevy::app::App;
 use bevy::prelude::*;
-use bevy::utils::futures;
 use reqwest::blocking::*;
 use reqwest::cookie::Cookie;
 
@@ -77,12 +79,12 @@ fn main() {
     app.insert_resource(HTTPClient(Client::new()))
         .init_resource::<PlayerSettings>()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
-            window: WindowDescriptor {
+            primary_window: Some(Window {
                 title: String::from("Plants & Pests"),
                 resizable: true,
                 fit_canvas_to_parent: true,
                 ..default()
-            },
+            }),
             ..default()
         }))
         .add_plugin(HelloPlugin)
