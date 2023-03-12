@@ -87,10 +87,14 @@ const PRESSED_BUTTON: Color = Color::rgb(0.35, 0.75, 0.35);
 #[derive(Component)]
 struct SelectedOption;
 
+
+type InteractedButton = (Changed<Interaction>, With<Button>);
+type SelectedOptionButton<'a> = (&'a Interaction, &'a mut BackgroundColor, Option<&'a SelectedOption>);
+
 fn button_system(
     mut interaction_query: Query<
-        (&Interaction, &mut BackgroundColor, Option<&SelectedOption>),
-        (Changed<Interaction>, With<Button>),
+        SelectedOptionButton,
+        InteractedButton,
     >,
 ) {
     for (interaction, mut color, selected) in &mut interaction_query {

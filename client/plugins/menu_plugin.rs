@@ -2,7 +2,7 @@ use bevy::{app::AppExit, prelude::*};
 
 use super::{
     button_system, despawn, DisplayQuality, GameState, SelectedOption, Volume,
-    MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR,
+    MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR, InteractedButton
 };
 pub struct MenuPlugin;
 
@@ -82,7 +82,7 @@ enum MenuButtonAction {
 // This system updates the settings when a new value for a setting is selected, and marks
 // the button as the one currently selected
 fn setting_button<T: Resource + Component + PartialEq + Copy>(
-    interaction_query: Query<(&Interaction, &T, Entity), (Changed<Interaction>, With<Button>)>,
+    interaction_query: Query<(&Interaction, &T, Entity), InteractedButton>,
     mut selected_query: Query<(Entity, &mut BackgroundColor), With<SelectedOption>>,
     mut commands: Commands,
     mut setting: ResMut<T>,
@@ -495,10 +495,12 @@ fn sound_settings_menu_setup(
         });
 }
 
+type SelectedMenuButton<'a> = (&'a Interaction, &'a MenuButtonAction);
+
 fn menu_action(
     interaction_query: Query<
-        (&Interaction, &MenuButtonAction),
-        (Changed<Interaction>, With<Button>),
+        SelectedMenuButton,
+        InteractedButton,
     >,
     mut app_exit_events: EventWriter<AppExit>,
     mut menu_state: ResMut<NextState<MenuState>>,

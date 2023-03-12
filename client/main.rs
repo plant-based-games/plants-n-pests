@@ -9,7 +9,7 @@ use crate::plugins::state_handler_plugin::ScreenHandlerPlugin;
 use bevy::app::App;
 use bevy::prelude::*;
 use reqwest::blocking::*;
-use reqwest::cookie::Cookie;
+
 
 const BASEURL: &str = "localhost:8080";
 

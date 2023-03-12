@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::{button_system, despawn, GameState, MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR};
+use super::{button_system, despawn, GameState, MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR, InteractedButton};
 
 pub struct DraftPlugin;
 
@@ -10,7 +10,6 @@ impl Plugin for DraftPlugin {
             .add_system(splash_setup.in_schedule(OnEnter(GameState::Draft)))
             .add_system(countdown.in_set(OnUpdate(GameState::Draft)))
             .add_system(countdown_update.in_set(OnUpdate(GameState::Draft)))
-            .add_system(despawn::<RemainingTime>.in_set(OnUpdate(GameState::Draft)))
             .add_system(draft_actions.in_set(OnUpdate(GameState::Draft)))
             .add_system(button_system.in_set(OnUpdate(GameState::Draft)))
             .add_system(despawn::<OnDraftScreen>.in_schedule(OnExit(GameState::Draft)));
@@ -136,8 +135,12 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 fn countdown_update(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
-    mut timer: ResMut<DraftTimer>,
+    timer: ResMut<DraftTimer>,
+    to_despawn: Query<Entity, With<RemainingTime>>
 ) {
+    for entity in &to_despawn {
+        commands.entity(entity).despawn_recursive();
+    }
     let time_remaining = timer.remaining_secs().round().to_string();
     commands.spawn((
         TextBundle::from_section(
@@ -167,10 +170,12 @@ fn countdown(
     }
 }
 
+type InteractedAction<'a> = (&'a Interaction, &'a DraftButtonActions);
+
 fn draft_actions(
     interaction_query: Query<
-        (&Interaction, &DraftButtonActions),
-        (Changed<Interaction>, With<Button>),
+        InteractedAction<'_>,
+        InteractedButton,
     >,
     mut game_state: ResMut<NextState<GameState>>,
 ) {
