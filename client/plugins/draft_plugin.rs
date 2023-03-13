@@ -1,6 +1,9 @@
 use bevy::prelude::*;
 
-use super::{button_system, despawn, GameState, MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR, InteractedButton};
+use super::{
+    button_system, despawn, GameState, InteractedButton, MENU_BACKGROUND_COLOR, NORMAL_BUTTON,
+    TEXT_COLOR,
+};
 
 pub struct DraftPlugin;
 
@@ -136,7 +139,7 @@ fn countdown_update(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     timer: ResMut<DraftTimer>,
-    to_despawn: Query<Entity, With<RemainingTime>>
+    to_despawn: Query<Entity, With<RemainingTime>>,
 ) {
     for entity in &to_despawn {
         commands.entity(entity).despawn_recursive();
@@ -173,10 +176,7 @@ fn countdown(
 type InteractedAction<'a> = (&'a Interaction, &'a DraftButtonActions);
 
 fn draft_actions(
-    interaction_query: Query<
-        InteractedAction<'_>,
-        InteractedButton,
-    >,
+    interaction_query: Query<InteractedAction<'_>, InteractedButton>,
     mut game_state: ResMut<NextState<GameState>>,
 ) {
     for (interaction, button_action) in &interaction_query {

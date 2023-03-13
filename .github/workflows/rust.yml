@@ -29,18 +29,18 @@ jobs:
       - name: Test
         run: cargo test
 
-clippy:
-  name: Clippy
-  runs-on: ubuntu-latest
-  steps:
-    - name: Clone repo
-      uses: actions/checkout@v3
-    - name: Install latest stable toolchain
-      uses: dtolnay/rust-toolchain@stable
-    - name: Cache crates
-      uses: Swatinem/rust-cache@v2
-    - name: Clippy
-      run: cargo clippy
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+      - name: Install latest stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache crates
+        uses: Swatinem/rust-cache@v2
+      - name: Clippy
+        run: cargo clippy
 
   format:
 

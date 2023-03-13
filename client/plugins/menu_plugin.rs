@@ -1,15 +1,14 @@
 use bevy::{app::AppExit, prelude::*};
 
 use super::{
-    button_system, despawn, DisplayQuality, GameState, SelectedOption, Volume,
-    MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR, InteractedButton
+    button_system, despawn, DisplayQuality, GameState, InteractedButton, SelectedOption, Volume,
+    MENU_BACKGROUND_COLOR, NORMAL_BUTTON, TEXT_COLOR,
 };
 pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_state::<MenuState>()
+        app.add_state::<MenuState>()
             .add_system(menu_setup.in_schedule(OnEnter(GameState::Menu)))
             // Systems to handle the main menu screen
             .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
@@ -498,10 +497,7 @@ fn sound_settings_menu_setup(
 type SelectedMenuButton<'a> = (&'a Interaction, &'a MenuButtonAction);
 
 fn menu_action(
-    interaction_query: Query<
-        SelectedMenuButton,
-        InteractedButton,
-    >,
+    interaction_query: Query<SelectedMenuButton, InteractedButton>,
     mut app_exit_events: EventWriter<AppExit>,
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<GameState>>,

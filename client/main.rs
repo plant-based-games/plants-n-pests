@@ -13,9 +13,9 @@ use bevy::prelude::*;
 use reqwest::blocking::Client;
 
 #[cfg(target_arch = "wasm32")]
-use reqwest::Client;
-#[cfg(target_arch = "wasm32")]
 use bevy::window::{PrimaryWindow, WindowResolution};
+#[cfg(target_arch = "wasm32")]
+use reqwest::Client;
 
 #[cfg(target_arch = "wasm32")]
 fn handle_browser_resize(mut window_query: Query<&Window, With<PrimaryWindow>>) {

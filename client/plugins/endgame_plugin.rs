@@ -8,9 +8,7 @@ impl Plugin for EndgamePlugin {
     fn build(&self, app: &mut App) {
         app.add_system(splash_setup.in_schedule(OnEnter(GameState::Endgame)))
             .add_system(countdown.in_set(OnUpdate(GameState::Endgame)))
-            .add_system(
-                despawn::<OnEndgameScreen>.in_schedule(OnExit(GameState::Endgame)),
-            );
+            .add_system(despawn::<OnEndgameScreen>.in_schedule(OnExit(GameState::Endgame)));
     }
 }
 
