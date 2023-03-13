@@ -59,7 +59,7 @@ jobs:
         run: cargo clippy
 
   format:
-
+    name: Format
     runs-on: ubuntu-latest
 
     steps:
