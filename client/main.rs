@@ -32,7 +32,7 @@ fn handle_browser_resize(mut window_query: Query<&Window, With<PrimaryWindow>>) 
     }
 }
 
-const BASEURL: &str = "localhost:8080";
+const BASEURL: &str = "localhost:8000";
 
 #[derive(Resource)]
 struct PlayerSettings {

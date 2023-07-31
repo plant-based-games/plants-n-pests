@@ -44,6 +44,7 @@ class Game {
   }
 
   getState(): State {
+    console.log(`current state is: ${this.state.stateName}`)
     return this.state
   }
 

@@ -28,13 +28,12 @@ fn game_setup(
     volume: Res<Volume>,
 ) {
     let font = asset_server.load("fonts/FiraSans-Bold.ttf");
-
     commands
         .spawn((
             NodeBundle {
                 style: Style {
-                    width: Val::Percent(100.0),
-                    height: Val::Percent(100.0),
+                    width: Val::Percent(90.0),
+                    height: Val::Percent(90.0),
                     // center children
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
