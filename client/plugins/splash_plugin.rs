@@ -10,11 +10,11 @@ impl Plugin for SplashPlugin {
         // As this plugin is managing the splash screen, it will focus on the state `GameState::Splash`
         app
             // When entering the state, spawn everything needed for this screen
-            .add_system(splash_setup.in_schedule(OnEnter(GameState::Splash)))
+            .add_systems(OnEnter(GameState::Splash), splash_setup)
             // While in this state, run the `countdown` system
-            .add_system(countdown.in_set(OnUpdate(GameState::Splash)))
+            .add_systems(Update, countdown.run_if(in_state(GameState::Splash)))
             // When exiting the state, despawn everything that was spawned for this screen
-            .add_system(despawn::<OnSplashScreen>.in_schedule(OnExit(GameState::Splash)));
+            .add_systems(OnExit(GameState::Splash), despawn::<OnSplashScreen>);
     }
 }
 
@@ -35,7 +35,8 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 style: Style {
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0),
+                    height: Val::Percent(100.0),
                     ..default()
                 },
                 ..default()
@@ -46,7 +47,8 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             parent.spawn(ImageBundle {
                 style: Style {
                     // This will set the logo to be 200px wide, and auto adjust its height
-                    size: Size::new(Val::Px(200.0), Val::Auto),
+                    width: Val::Px(200.0),
+                    height: Val::Auto,
                     ..default()
                 },
                 image: UiImage::from(icon),

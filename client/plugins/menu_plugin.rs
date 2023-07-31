@@ -9,33 +9,26 @@ pub struct MenuPlugin;
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
         app.add_state::<MenuState>()
-            .add_system(menu_setup.in_schedule(OnEnter(GameState::Menu)))
+            .add_systems(OnEnter(GameState::Menu), menu_setup)
             // Systems to handle the main menu screen
-            .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
-            .add_system(despawn::<OnMainMenuScreen>.in_schedule(OnExit(MenuState::Main)))
+            .add_systems(OnEnter(MenuState::Main), main_menu_setup)
+            .add_systems(OnExit(MenuState::Main), despawn::<OnMainMenuScreen>)
             // Systems to handle the settings menu screen
-            .add_system(settings_menu_setup.in_schedule(OnEnter(MenuState::Settings)))
-            .add_system(despawn::<OnSettingsMenuScreen>.in_schedule(OnExit(MenuState::Settings)))
+            .add_systems(OnEnter(MenuState::Settings), settings_menu_setup)
+            .add_systems(OnExit(MenuState::Settings), despawn::<OnSettingsMenuScreen>)
             // Systems to handle the display settings screen
-            .add_system(
-                display_settings_menu_setup.in_schedule(OnEnter(MenuState::SettingsDisplay)),
-            )
-            .add_system(
-                setting_button::<DisplayQuality>.in_set(OnUpdate(MenuState::SettingsDisplay)),
-            )
-            .add_system(
-                despawn::<OnDisplaySettingsMenuScreen>
-                    .in_schedule(OnExit(MenuState::SettingsDisplay)),
-            )
+            .add_systems(OnEnter(MenuState::SettingsDisplay), display_settings_menu_setup)
+            .add_systems(OnExit(MenuState::SettingsDisplay), despawn::<OnDisplaySettingsMenuScreen>)
             // Systems to handle the sound settings screen
-            .add_system(sound_settings_menu_setup.in_schedule(OnEnter(MenuState::SettingsSound)))
-            .add_system(setting_button::<Volume>.in_set(OnUpdate(MenuState::SettingsSound)))
-            .add_system(
-                despawn::<OnSoundSettingsMenuScreen>.in_schedule(OnExit(MenuState::SettingsSound)),
-            )
-            // Common systems to all screens that handles buttons behaviour
-            .add_system(menu_action.in_set(OnUpdate(GameState::Menu)))
-            .add_system(button_system.in_set(OnUpdate(GameState::Menu)));
+            .add_systems(OnEnter(MenuState::SettingsSound), sound_settings_menu_setup)
+            .add_systems(OnExit(MenuState::SettingsSound), despawn::<OnSoundSettingsMenuScreen>)
+            // Systems to handle updates
+            .add_systems(Update, (
+                setting_button::<DisplayQuality>.run_if(in_state(MenuState::SettingsDisplay)),
+                setting_button::<Volume>.run_if(in_state(MenuState::SettingsSound)),
+                menu_action.run_if(in_state(GameState::Menu)),
+                button_system.run_if(in_state(GameState::Menu)),
+            ));
     }
 }
 
@@ -87,7 +80,7 @@ fn setting_button<T: Resource + Component + PartialEq + Copy>(
     mut setting: ResMut<T>,
 ) {
     for (interaction, button_setting, entity) in &interaction_query {
-        if *interaction == Interaction::Clicked && *setting != *button_setting {
+        if *interaction == Interaction::Pressed && *setting != *button_setting {
             let (previous_button, mut previous_color) = selected_query.single_mut();
             *previous_color = NORMAL_BUTTON.into();
             commands.entity(previous_button).remove::<SelectedOption>();
@@ -105,23 +98,23 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let font = asset_server.load("fonts/FiraSans-Bold.ttf");
     // Common style for all buttons on the screen
     let button_style = Style {
-        size: Size::new(Val::Px(250.0), Val::Px(65.0)),
+        width: Val::Px(250.0),
+        height: Val::Px(65.0),
         margin: UiRect::all(Val::Px(20.0)),
         justify_content: JustifyContent::Center,
         align_items: AlignItems::Center,
         ..default()
     };
     let button_icon_style = Style {
-        size: Size::new(Val::Px(30.0), Val::Auto),
+        width: Val::Px(30.0),
+        height: Val::Auto,
         // This takes the icons out of the flexbox flow, to be positioned exactly
         position_type: PositionType::Absolute,
         // The icon will be close to the left border of the button
-        position: UiRect {
-            left: Val::Px(10.0),
-            right: Val::Auto,
-            top: Val::Auto,
-            bottom: Val::Auto,
-        },
+        left: Val::Px(10.0),
+        right: Val::Auto,
+        top: Val::Auto,
+        bottom: Val::Auto,
         ..default()
     };
     let button_text_style = TextStyle {
@@ -134,7 +127,8 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0),
+                    height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()
@@ -241,7 +235,8 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
 fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let button_style = Style {
-        size: Size::new(Val::Px(200.0), Val::Px(65.0)),
+        width:  Val::Px(200.0),
+        height: Val::Px(65.0),
         margin: UiRect::all(Val::Px(20.0)),
         justify_content: JustifyContent::Center,
         align_items: AlignItems::Center,
@@ -258,7 +253,8 @@ fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0),
+                    height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()
@@ -310,7 +306,8 @@ fn display_settings_menu_setup(
     display_quality: Res<DisplayQuality>,
 ) {
     let button_style = Style {
-        size: Size::new(Val::Px(200.0), Val::Px(65.0)),
+        width: Val::Px(200.0),
+        height: Val::Px(65.0),
         margin: UiRect::all(Val::Px(20.0)),
         justify_content: JustifyContent::Center,
         align_items: AlignItems::Center,
@@ -326,7 +323,8 @@ fn display_settings_menu_setup(
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0),
+                    height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()
@@ -372,7 +370,7 @@ fn display_settings_menu_setup(
                             ] {
                                 let mut entity = parent.spawn(ButtonBundle {
                                     style: Style {
-                                        size: Size::new(Val::Px(150.0), Val::Px(65.0)),
+                                        width: Val::Px(150.0), height: Val::Px(65.0),
                                         ..button_style.clone()
                                     },
                                     background_color: NORMAL_BUTTON.into(),
@@ -412,7 +410,8 @@ fn sound_settings_menu_setup(
     volume: Res<Volume>,
 ) {
     let button_style = Style {
-        size: Size::new(Val::Px(200.0), Val::Px(65.0)),
+        width: Val::Px(200.0),
+        height: Val::Px(65.0),
         margin: UiRect::all(Val::Px(20.0)),
         justify_content: JustifyContent::Center,
         align_items: AlignItems::Center,
@@ -428,7 +427,8 @@ fn sound_settings_menu_setup(
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0),
+                    height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()
@@ -466,7 +466,8 @@ fn sound_settings_menu_setup(
                             for volume_setting in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] {
                                 let mut entity = parent.spawn(ButtonBundle {
                                     style: Style {
-                                        size: Size::new(Val::Px(30.0), Val::Px(65.0)),
+                                        width: Val::Px(30.0),
+                                        height: Val::Px(65.0),
                                         ..button_style.clone()
                                     },
                                     background_color: NORMAL_BUTTON.into(),
@@ -503,7 +504,7 @@ fn menu_action(
     mut game_state: ResMut<NextState<GameState>>,
 ) {
     for (interaction, menu_button_action) in &interaction_query {
-        if *interaction == Interaction::Clicked {
+        if *interaction == Interaction::Pressed {
             match menu_button_action {
                 MenuButtonAction::Quit => app_exit_events.send(AppExit),
                 MenuButtonAction::Play => {

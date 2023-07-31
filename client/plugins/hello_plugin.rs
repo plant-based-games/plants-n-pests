@@ -6,8 +6,8 @@ pub struct HelloPlugin;
 impl Plugin for HelloPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(GreetTimer(Timer::from_seconds(5.0, TimerMode::Repeating)))
-            .add_startup_system(add_plants)
-            .add_system(announce_plants);
+            .add_systems(Startup, add_plants)
+            .add_systems(Update, announce_plants);
     }
 }
 

@@ -6,9 +6,9 @@ pub struct EndgamePlugin;
 
 impl Plugin for EndgamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(splash_setup.in_schedule(OnEnter(GameState::Endgame)))
-            .add_system(countdown.in_set(OnUpdate(GameState::Endgame)))
-            .add_system(despawn::<OnEndgameScreen>.in_schedule(OnExit(GameState::Endgame)));
+        app.add_systems(OnEnter(GameState::Endgame), splash_setup)
+            .add_systems(Update, countdown.run_if(in_state(GameState::Endgame)))
+            .add_systems(OnExit(GameState::Endgame),despawn::<OnEndgameScreen>);
     }
 }
 
@@ -25,7 +25,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0), height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()

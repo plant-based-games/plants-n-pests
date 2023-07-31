@@ -13,8 +13,8 @@ impl Plugin for NetworkPlugin {
             5.0,
             TimerMode::Repeating,
         )))
-        .add_startup_system(add_defaults)
-        .add_system(heartbeat);
+        .add_systems(Startup, add_defaults)
+        .add_systems(Update, heartbeat);
     }
 }
 

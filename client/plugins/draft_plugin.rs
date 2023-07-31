@@ -10,12 +10,14 @@ pub struct DraftPlugin;
 impl Plugin for DraftPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(DraftTimer(Timer::from_seconds(10.0, TimerMode::Once)))
-            .add_system(splash_setup.in_schedule(OnEnter(GameState::Draft)))
-            .add_system(countdown.in_set(OnUpdate(GameState::Draft)))
-            .add_system(countdown_update.in_set(OnUpdate(GameState::Draft)))
-            .add_system(draft_actions.in_set(OnUpdate(GameState::Draft)))
-            .add_system(button_system.in_set(OnUpdate(GameState::Draft)))
-            .add_system(despawn::<OnDraftScreen>.in_schedule(OnExit(GameState::Draft)));
+            .add_systems(OnEnter(GameState::Draft), splash_setup)
+            .add_systems(Update, (
+                countdown.run_if(in_state(GameState::Draft)),
+                countdown_update.run_if(in_state(GameState::Draft)),
+                draft_actions.run_if(in_state(GameState::Draft)),
+                button_system.run_if(in_state(GameState::Draft))
+            ))
+            .add_systems(OnExit(GameState::Draft), despawn::<OnDraftScreen>);
     }
 }
 
@@ -40,7 +42,8 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0),
+                    height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()
@@ -93,7 +96,8 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         .spawn((
                             ButtonBundle {
                                 style: Style {
-                                    size: Size::new(Val::Px(250.0), Val::Px(65.0)),
+                                    width: Val::Px(250.0),
+                                    height: Val::Px(65.0),
                                     margin: UiRect::all(Val::Px(20.0)),
                                     justify_content: JustifyContent::Center,
                                     align_items: AlignItems::Center,
@@ -180,7 +184,7 @@ fn draft_actions(
     mut game_state: ResMut<NextState<GameState>>,
 ) {
     for (interaction, button_action) in &interaction_query {
-        if *interaction == Interaction::Clicked {
+        if *interaction == Interaction::Pressed {
             match button_action {
                 DraftButtonActions::Ready => {
                     game_state.set(GameState::Game);

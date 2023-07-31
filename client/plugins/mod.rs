@@ -34,7 +34,6 @@ pub(crate) struct PlantBundle {
     pub(crate) position: Position,
     pub(crate) _type: Plant,
     pub(crate) value: Value,
-    #[bundle]
     pub(crate) sprite: SpriteSheetBundle,
 }
 
@@ -97,7 +96,7 @@ type SelectedOptionButton<'a> = (
 fn button_system(mut interaction_query: Query<SelectedOptionButton, InteractedButton>) {
     for (interaction, mut color, selected) in &mut interaction_query {
         *color = match (*interaction, selected) {
-            (Interaction::Clicked, _) | (Interaction::None, Some(_)) => PRESSED_BUTTON.into(),
+            (Interaction::Pressed, _) | (Interaction::None, Some(_)) => PRESSED_BUTTON.into(),
             (Interaction::Hovered, Some(_)) => HOVERED_PRESSED_BUTTON.into(),
             (Interaction::Hovered, None) => HOVERED_BUTTON.into(),
             (Interaction::None, None) => NORMAL_BUTTON.into(),

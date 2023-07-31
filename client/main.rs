@@ -121,7 +121,7 @@ fn main() {
 
     app.insert_resource(HTTPClient(Client::new()))
         .init_resource::<PlayerSettings>()
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
+        .add_plugins((DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: String::from("Plants & Pests"),
                 resizable: true,
@@ -129,10 +129,7 @@ fn main() {
                 ..default()
             }),
             ..default()
-        }))
-        .add_plugin(HelloPlugin)
-        .add_plugin(NetworkPlugin)
-        .add_plugin(ScreenHandlerPlugin);
+        }), HelloPlugin, NetworkPlugin, ScreenHandlerPlugin));
 
     #[cfg(target_arch = "wasm32")]
     app.add_system(handle_browser_resize);

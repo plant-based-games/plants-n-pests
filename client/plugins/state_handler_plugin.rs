@@ -16,14 +16,10 @@ pub struct ScreenHandlerPlugin;
 
 impl Plugin for ScreenHandlerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(setup)
+        app.add_systems(Startup, setup)
             .insert_resource(DisplayQuality::Medium)
             .insert_resource(Volume(7))
             .add_state::<GameState>()
-            .add_plugin(SplashPlugin)
-            .add_plugin(MenuPlugin)
-            .add_plugin(DraftPlugin)
-            .add_plugin(GamePlugin)
-            .add_plugin(EndgamePlugin);
+            .add_plugins((SplashPlugin, MenuPlugin, DraftPlugin, GamePlugin, EndgamePlugin));
     }
 }

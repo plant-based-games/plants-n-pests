@@ -8,9 +8,9 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(game_setup.in_schedule(OnEnter(GameState::Game)))
-            .add_system(game.in_set(OnUpdate(GameState::Game)))
-            .add_system(despawn::<OnGameScreen>.in_schedule(OnExit(GameState::Game)));
+        app.add_systems(OnEnter(GameState::Game), game_setup)
+            .add_systems(Update, game.run_if(in_state(GameState::Game)))
+            .add_systems(OnExit(GameState::Game), despawn::<OnGameScreen>);
     }
 }
 
@@ -33,7 +33,8 @@ fn game_setup(
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    width: Val::Percent(100.0),
+                    height: Val::Percent(100.0),
                     // center children
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
