@@ -131,3 +131,6 @@ Make sure you have the wasm compilation target & Install the WASM Bindgen
 
     cargo fmt
 
+### Optimize WASM binaries for size for release ###
+    
+    cargo build --profile wasm-release --target wasm32-unknown-unknown
