@@ -9,13 +9,8 @@ use crate::plugins::state_handler_plugin::ScreenHandlerPlugin;
 use bevy::app::App;
 use bevy::prelude::*;
 
-#[cfg(not(target_arch = "wasm32"))]
-use reqwest::blocking::Client;
-
 #[cfg(target_arch = "wasm32")]
 use bevy::window::{PrimaryWindow, WindowResolution};
-#[cfg(target_arch = "wasm32")]
-use reqwest::Client;
 
 #[cfg(target_arch = "wasm32")]
 fn handle_browser_resize(mut window_query: Query<&Window, With<PrimaryWindow>>) {
@@ -32,96 +27,10 @@ fn handle_browser_resize(mut window_query: Query<&Window, With<PrimaryWindow>>) 
     }
 }
 
-const BASEURL: &str = "localhost:8000";
-
-#[derive(Resource)]
-struct PlayerSettings {
-    cookie_secret: String,
-}
-
-#[derive(Resource)]
-struct HTTPClient(Client);
-
-#[cfg(not(target_arch = "wasm32"))]
-impl FromWorld for PlayerSettings {
-    fn from_world(world: &mut World) -> Self {
-        if let Some(client) = world.get_resource::<HTTPClient>() {
-            if let Ok(res) = client
-                .0
-                .post(format!("{}{}", BASEURL, "/login"))
-                .body("hi")
-                .send()
-            {
-                let mut cookies = res.cookies();
-                if let Some(cookie) = cookies.find(|c| c.name() == "cookie") {
-                    println!("SUCCESSFUL LOGIN");
-                    PlayerSettings {
-                        cookie_secret: cookie.value().to_string(),
-                    }
-                } else {
-                    println!("ERROR LOGGING IN 1");
-                    PlayerSettings {
-                        cookie_secret: String::from("NOCOOKIEFOUND"),
-                    }
-                }
-            } else {
-                println!("ERROR LOGGING IN 2");
-                PlayerSettings {
-                    cookie_secret: String::from("NOCOOKIEFOUND"),
-                }
-            }
-        } else {
-            println!("ERROR LOGGING IN 3");
-            PlayerSettings {
-                cookie_secret: String::from("NOCOOKIEFOUND"),
-            }
-        }
-    }
-}
-
-#[cfg(target_arch = "wasm32")]
-impl FromWorld for PlayerSettings {
-    fn from_world(world: &mut World) -> Self {
-        if let Some(client) = world.get_resource::<HTTPClient>() {
-            if let Ok(res) = client
-                .0
-                .post(format!("{}{}", BASEURL, "/login"))
-                .body("hi")
-                .send()
-            {
-                let mut cookies = res.cookies();
-                if let Some(cookie) = cookies.find(|c| c.name() == "cookie") {
-                    println!("SUCCESSFUL LOGIN");
-                    PlayerSettings {
-                        cookie_secret: cookie.value().to_string(),
-                    }
-                } else {
-                    println!("ERROR LOGGING IN 1");
-                    PlayerSettings {
-                        cookie_secret: String::from("NOCOOKIEFOUND"),
-                    }
-                }
-            } else {
-                println!("ERROR LOGGING IN 2");
-                PlayerSettings {
-                    cookie_secret: String::from("NOCOOKIEFOUND"),
-                }
-            }
-        } else {
-            println!("ERROR LOGGING IN 3");
-            PlayerSettings {
-                cookie_secret: String::from("NOCOOKIEFOUND"),
-            }
-        }
-    }
-}
-
 fn main() {
     let mut app = App::new();
 
-    app.insert_resource(HTTPClient(Client::new()))
-        .init_resource::<PlayerSettings>()
-        .add_plugins((DefaultPlugins.set(WindowPlugin {
+    app.add_plugins((DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: String::from("Plants & Pests"),
                 resizable: true,
