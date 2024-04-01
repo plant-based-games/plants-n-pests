@@ -32,11 +32,13 @@ fn add_plants(mut commands: Commands) {
         value: Value(1),
         sprite: SpriteSheetBundle {
             sprite: Default::default(),
-            texture_atlas: Default::default(),
             transform: Default::default(),
             global_transform: Default::default(),
+            texture: Default::default(),
+            atlas: Default::default(),
             visibility: Default::default(),
-            computed_visibility: Default::default(),
+            inherited_visibility: Default::default(),
+            view_visibility: Default::default(),
         },
     });
     commands.spawn(PlantBundle {
@@ -46,11 +48,13 @@ fn add_plants(mut commands: Commands) {
         value: Value(1),
         sprite: SpriteSheetBundle {
             sprite: Default::default(),
-            texture_atlas: Default::default(),
             transform: Default::default(),
             global_transform: Default::default(),
+            texture: Default::default(),
+            atlas: Default::default(),
             visibility: Default::default(),
-            computed_visibility: Default::default(),
+            inherited_visibility: Default::default(),
+            view_visibility: Default::default(),
         },
     });
     commands.spawn(PlantBundle {
@@ -60,11 +64,13 @@ fn add_plants(mut commands: Commands) {
         value: Value(1),
         sprite: SpriteSheetBundle {
             sprite: Default::default(),
-            texture_atlas: Default::default(),
             transform: Default::default(),
             global_transform: Default::default(),
+            texture: Default::default(),
+            atlas: Default::default(),
             visibility: Default::default(),
-            computed_visibility: Default::default(),
+            inherited_visibility: Default::default(),
+            view_visibility: Default::default(),
         },
     });
 }

@@ -33,12 +33,12 @@ lto = "fat"
 codegen-units = 1
 
 [dependencies]
-wasm-bindgen = "0.2.87"
-js-sys = "0.3.64"
-wasm-bindgen-futures = "0.4.37"
+wasm-bindgen = "0.2.92"
+js-sys = "0.3.69"
+wasm-bindgen-futures = "0.4.42"
 
 [dependencies.web-sys]
-version = "0.3.64"
+version = "0.3.69"
 features = [
     'Headers',
     'Client',
@@ -50,7 +50,7 @@ features = [
 ]
 
 [dependencies.bevy]
-version = "0.11.0"
+version = "0.13.1"
 # Disable the default features if there are any that you do not want
 default-features = false
 features = [
@@ -65,7 +65,6 @@ features = [
     "bevy_winit",         # Window management
     "animation",          # Animation support
     "x11",                # Linux: Support X11 windowing system
-    "filesystem_watcher", # Asset hot-reloading
 
     ## "render" actually just includes:
     ## (feel free to use just a subset of these, instead of "render")

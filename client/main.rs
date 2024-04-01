@@ -34,7 +34,6 @@ fn main() {
             primary_window: Some(Window {
                 title: String::from("Plants & Pests"),
                 resizable: true,
-                fit_canvas_to_parent: true,
                 ..default()
             }),
             ..default()

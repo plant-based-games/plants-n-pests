@@ -8,7 +8,7 @@ pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_state::<MenuState>()
+        app.init_state::<MenuState>()
             .add_systems(OnEnter(GameState::Menu), menu_setup)
             // Systems to handle the main menu screen
             .add_systems(OnEnter(MenuState::Main), main_menu_setup)
@@ -506,7 +506,7 @@ fn menu_action(
     for (interaction, menu_button_action) in &interaction_query {
         if *interaction == Interaction::Pressed {
             match menu_button_action {
-                MenuButtonAction::Quit => app_exit_events.send(AppExit),
+                MenuButtonAction::Quit => { app_exit_events.send(AppExit); },
                 MenuButtonAction::Play => {
                     game_state.set(GameState::Draft);
                     menu_state.set(MenuState::Disabled);
