@@ -80,7 +80,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     );
                     parent.spawn(
                         TextBundle::from_section(
-                            "You have ten seconds to pretend to be drafting cards",
+                            "You have seven seconds to pretend to be drafting cards",
                             TextStyle {
                                 font: font.clone(),
                                 font_size: 20.0,
@@ -120,7 +120,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         });
                     parent.spawn((
                         TextBundle::from_section(
-                            "remaining time: 10",
+                            "remaining time: 7",
                             TextStyle {
                                 font: asset_server.load("fonts/FiraSans-Bold.ttf"),
                                 font_size: 20.0,
@@ -136,7 +136,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     ));
                 });
         });
-    commands.insert_resource(DraftTimer(Timer::from_seconds(10.0, TimerMode::Once)));
+    commands.insert_resource(DraftTimer(Timer::from_seconds(7.0, TimerMode::Once)));
 }
 
 fn countdown_update(
