@@ -57,14 +57,19 @@ fn handle_browser_resize(
 fn main() {
     let mut app = App::new();
 
-    app.add_plugins((DefaultPlugins.set(WindowPlugin {
+    app.add_plugins((
+        DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: String::from("Plants & Pests"),
                 resizable: true,
                 ..default()
             }),
             ..default()
-        }), HelloPlugin, NetworkPlugin, ScreenHandlerPlugin));
+        }),
+        HelloPlugin,
+        NetworkPlugin,
+        ScreenHandlerPlugin,
+    ));
 
     #[cfg(target_arch = "wasm32")]
     app.add_systems(Update, handle_browser_resize);

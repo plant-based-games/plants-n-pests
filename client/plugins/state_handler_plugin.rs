@@ -20,6 +20,12 @@ impl Plugin for ScreenHandlerPlugin {
             .insert_resource(DisplayQuality::Medium)
             .insert_resource(Volume(7))
             .init_state::<GameState>()
-            .add_plugins((SplashPlugin, MenuPlugin, DraftPlugin, GamePlugin, EndgamePlugin));
+            .add_plugins((
+                SplashPlugin,
+                MenuPlugin,
+                DraftPlugin,
+                GamePlugin,
+                EndgamePlugin,
+            ));
     }
 }

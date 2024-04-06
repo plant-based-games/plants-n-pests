@@ -17,18 +17,30 @@ impl Plugin for MenuPlugin {
             .add_systems(OnEnter(MenuState::Settings), settings_menu_setup)
             .add_systems(OnExit(MenuState::Settings), despawn::<OnSettingsMenuScreen>)
             // Systems to handle the display settings screen
-            .add_systems(OnEnter(MenuState::SettingsDisplay), display_settings_menu_setup)
-            .add_systems(OnExit(MenuState::SettingsDisplay), despawn::<OnDisplaySettingsMenuScreen>)
+            .add_systems(
+                OnEnter(MenuState::SettingsDisplay),
+                display_settings_menu_setup,
+            )
+            .add_systems(
+                OnExit(MenuState::SettingsDisplay),
+                despawn::<OnDisplaySettingsMenuScreen>,
+            )
             // Systems to handle the sound settings screen
             .add_systems(OnEnter(MenuState::SettingsSound), sound_settings_menu_setup)
-            .add_systems(OnExit(MenuState::SettingsSound), despawn::<OnSoundSettingsMenuScreen>)
+            .add_systems(
+                OnExit(MenuState::SettingsSound),
+                despawn::<OnSoundSettingsMenuScreen>,
+            )
             // Systems to handle updates
-            .add_systems(Update, (
-                setting_button::<DisplayQuality>.run_if(in_state(MenuState::SettingsDisplay)),
-                setting_button::<Volume>.run_if(in_state(MenuState::SettingsSound)),
-                menu_action.run_if(in_state(GameState::Menu)),
-                button_system.run_if(in_state(GameState::Menu)),
-            ));
+            .add_systems(
+                Update,
+                (
+                    setting_button::<DisplayQuality>.run_if(in_state(MenuState::SettingsDisplay)),
+                    setting_button::<Volume>.run_if(in_state(MenuState::SettingsSound)),
+                    menu_action.run_if(in_state(GameState::Menu)),
+                    button_system.run_if(in_state(GameState::Menu)),
+                ),
+            );
     }
 }
 
@@ -235,7 +247,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
 fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let button_style = Style {
-        width:  Val::Px(200.0),
+        width: Val::Px(200.0),
         height: Val::Px(65.0),
         margin: UiRect::all(Val::Px(20.0)),
         justify_content: JustifyContent::Center,
@@ -370,7 +382,8 @@ fn display_settings_menu_setup(
                             ] {
                                 let mut entity = parent.spawn(ButtonBundle {
                                     style: Style {
-                                        width: Val::Px(150.0), height: Val::Px(65.0),
+                                        width: Val::Px(150.0),
+                                        height: Val::Px(65.0),
                                         ..button_style.clone()
                                     },
                                     background_color: NORMAL_BUTTON.into(),
@@ -506,7 +519,9 @@ fn menu_action(
     for (interaction, menu_button_action) in &interaction_query {
         if *interaction == Interaction::Pressed {
             match menu_button_action {
-                MenuButtonAction::Quit => { app_exit_events.send(AppExit); },
+                MenuButtonAction::Quit => {
+                    app_exit_events.send(AppExit);
+                }
                 MenuButtonAction::Play => {
                     game_state.set(GameState::Draft);
                     menu_state.set(MenuState::Disabled);

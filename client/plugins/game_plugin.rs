@@ -55,7 +55,6 @@ fn game_setup(
                     ..default()
                 })
                 .with_children(|parent| {
-                    // Display two lines of text, the second one with the current settings
                     parent.spawn(
                         TextBundle::from_section(
                             "This will be the game screen eventually",
@@ -104,7 +103,6 @@ fn game_setup(
                     );
                 });
         });
-    // Spawn a 5 seconds timer to trigger going back to the menu
     commands.insert_resource(GameTimer(Timer::from_seconds(5.0, TimerMode::Once)));
 }
 

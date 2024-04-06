@@ -9,14 +9,17 @@ pub struct DraftPlugin;
 
 impl Plugin for DraftPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(DraftTimer(Timer::from_seconds(10.0, TimerMode::Once)))
+        app.insert_resource(DraftTimer(Timer::from_seconds(7.0, TimerMode::Once)))
             .add_systems(OnEnter(GameState::Draft), splash_setup)
-            .add_systems(Update, (
-                countdown.run_if(in_state(GameState::Draft)),
-                countdown_update.run_if(in_state(GameState::Draft)),
-                draft_actions.run_if(in_state(GameState::Draft)),
-                button_system.run_if(in_state(GameState::Draft))
-            ))
+            .add_systems(
+                Update,
+                (
+                    countdown.run_if(in_state(GameState::Draft)),
+                    countdown_update.run_if(in_state(GameState::Draft)),
+                    draft_actions.run_if(in_state(GameState::Draft)),
+                    button_system.run_if(in_state(GameState::Draft)),
+                ),
+            )
             .add_systems(OnExit(GameState::Draft), despawn::<OnDraftScreen>);
     }
 }
