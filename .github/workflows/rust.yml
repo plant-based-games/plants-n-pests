@@ -28,9 +28,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev
           sudo apt-get install libwayland-dev libxkbcommon-dev
-      - name: Install latest nightly toolchain
+      - name: Install latest nightly toolchain with wasm target
         uses: dtolnay/rust-toolchain@nightly
-
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy
+          
       - name: Cache crates
         uses: Swatinem/rust-cache@v2
 
@@ -49,8 +52,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev
           sudo apt-get install libwayland-dev libxkbcommon-dev
-      - name: Install latest nightly toolchain
+      - name: Install latest nightly toolchain with wasm target
         uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-unknown
 
       - name: Cache crates
         uses: Swatinem/rust-cache@v2
