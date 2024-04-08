@@ -4,6 +4,10 @@ import type { Infer } from './zod-helper'
 export const Config = z.object({
   cookieSecret: z.string().min(40),
   playerCount: z.preprocess((v) => Number(v), z.union([z.literal(3), z.literal(4)])),
+  port: z.preprocess(
+    (v) => (v === undefined ? v : Number(v)),
+    z.number().int().positive().gte(0).lte(65535).optional(),
+  ),
   seed: z.preprocess(
     (v) => (v === undefined ? v : Number(v)),
     z.number().int().positive().min(9).optional(),
@@ -20,6 +24,7 @@ export const loadConfig = (env: Env): Config => {
     cookieSecret: getEnv('cookie_secret'),
     playerCount: getEnv('player_count'),
     seed: env['seed'],
+    port: env['port'],
   }
   return Config.parse(raw)
 }

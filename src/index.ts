@@ -27,7 +27,8 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   }),
 )
-const port = 8000
+
+const port = config.port
 
 const game = makeGame(config)
 

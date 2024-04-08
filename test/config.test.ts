@@ -7,11 +7,13 @@ describe('loadConfig', () => {
     const env = {
       cookie_secret: makeSecret(),
       player_count: '3',
+      port: '8000',
     }
     expect(loadConfig(env)).toStrictEqual({
       cookieSecret: makeSecret(),
       playerCount: 3,
       seed: undefined,
+      port: 8000,
     })
   })
 
@@ -20,11 +22,13 @@ describe('loadConfig', () => {
       cookie_secret: makeSecret(),
       player_count: '3',
       seed: '7777',
+      port: '8000',
     }
     expect(loadConfig(env)).toStrictEqual({
       cookieSecret: makeSecret(),
       playerCount: 3,
       seed: 7777,
+      port: 8000,
     })
   })
 
@@ -46,6 +50,7 @@ describe('loadConfig', () => {
     const env = {
       cookie_secret: 'x'.repeat(39),
       player_count: '4',
+      port: '8000',
     }
     expect(() => loadConfig(env)).toThrow(/String must contain at least 40 character/)
   })
@@ -54,6 +59,7 @@ describe('loadConfig', () => {
     const env = {
       cookie_secret: makeSecret(),
       player_count: '2',
+      port: '8000',
     }
     expect(() => loadConfig(env)).toThrow(/Invalid literal/)
   })
@@ -63,6 +69,7 @@ describe('loadConfig', () => {
       cookie_secret: makeSecret(),
       player_count: '3',
       seed: 'not-a-number',
+      port: '8000',
     }
     expect(() => loadConfig(env)).toThrow(/Expected number, received nan/)
   })
@@ -74,5 +81,35 @@ describe('loadConfig', () => {
       seed: '8',
     }
     expect(() => loadConfig(env)).toThrow(/Number must be greater than or equal to 9/)
+  })
+
+  it('fails if port is present but not a number', () => {
+    const env = {
+      cookie_secret: makeSecret(),
+      player_count: '3',
+      seed: '9999',
+      port: 'not-a-number',
+    }
+    expect(() => loadConfig(env)).toThrow(/Expected number, received nan/)
+  })
+
+  it('fails if port is present but greater than 65535', () => {
+    const env = {
+      cookie_secret: makeSecret(),
+      player_count: '3',
+      seed: '8',
+      port: '66666',
+    }
+    expect(() => loadConfig(env)).toThrow(/Number must be less than or equal to 65535/)
+  })
+
+  it('fails if port is present but less than 0', () => {
+    const env = {
+      cookie_secret: makeSecret(),
+      player_count: '3',
+      seed: '8',
+      port: '-1',
+    }
+    expect(() => loadConfig(env)).toThrow(/Number must be greater than or equal to 0/)
   })
 })

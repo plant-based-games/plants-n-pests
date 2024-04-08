@@ -1,6 +1,4 @@
 #![forbid(unsafe_code)]
-
-mod browser_client;
 mod plugins;
 
 use crate::plugins::hello_plugin::HelloPlugin;
@@ -55,6 +53,9 @@ fn handle_browser_resize(
 }
 
 fn main() {
+
+
+
     let mut app = App::new();
 
     app.add_plugins((

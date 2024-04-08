@@ -28,7 +28,7 @@ export const terrainCard = (id: number, terrainType: TerrainType): TerrainCard =
     cardType: 'terrain',
     id,
     terrainType,
-  } as const)
+  }) as const
 
 type PlantCard = Readonly<{
   cardType: 'plant'
@@ -41,7 +41,7 @@ export const plantCard = (id: number, plantType: PlantType): PlantCard =>
     cardType: 'plant',
     id,
     plantType,
-  } as const)
+  }) as const
 
 type ContractCard = Readonly<{
   cardType: 'contract'
@@ -63,4 +63,4 @@ export const contractCard = (
     plantType,
     quantity,
     payment,
-  } as const)
+  }) as const

@@ -1,4 +1,4 @@
-ARG nodeV=18.14.0
+ARG nodeV=21.7.2
 
 from node:${nodeV}-bullseye-slim as build
 

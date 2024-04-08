@@ -36,6 +36,9 @@ codegen-units = 1
 wasm-bindgen = "0.2.92"
 js-sys = "0.3.69"
 wasm-bindgen-futures = "0.4.42"
+serde = "1.0.197"
+tokio = "1.37.0"
+
 
 [dependencies.web-sys]
 version = "0.3.69"
@@ -48,6 +51,7 @@ features = [
     'Response',
     'Window',
 ]
+
 
 [dependencies.bevy]
 version = "0.13.1"
