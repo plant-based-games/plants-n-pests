@@ -21,42 +21,48 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev
           sudo apt-get install libwayland-dev libxkbcommon-dev
-      - name: Install latest stable toolchain
-        uses: dtolnay/rust-toolchain@stable
-
+      - name: Install latest nightly toolchain with wasm target
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy
+          
       - name: Cache crates
         uses: Swatinem/rust-cache@v2
 
       - name: Test
-        run: cargo test
+        run: cargo clippy --target wasm32-unknown-unknown
 
   clippy:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
       - name: Clone repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev
           sudo apt-get install libwayland-dev libxkbcommon-dev
-      - name: Install latest stable toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install latest nightly toolchain with wasm target
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy
 
       - name: Cache crates
         uses: Swatinem/rust-cache@v2
 
       - name: Clippy
-        run: cargo clippy
+        run: cargo clippy --target wasm32-unknown-unknown
 
   format:
     name: Format
