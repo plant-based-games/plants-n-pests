@@ -1,10 +1,10 @@
-use crate::plugins::draft_plugin::DraftPlugin;
-use crate::plugins::endgame_plugin::EndgamePlugin;
+use crate::plugins::draft::DraftPlugin;
+use crate::plugins::endgame::EndgamePlugin;
 use bevy::prelude::*;
 
-use crate::plugins::game_plugin::GamePlugin;
-use crate::plugins::menu_plugin::MenuPlugin;
-use crate::plugins::splash_plugin::SplashPlugin;
+use crate::plugins::game::GamePlugin;
+use crate::plugins::menu::MenuPlugin;
+use crate::plugins::splash::SplashPlugin;
 
 use super::{DisplayQuality, GameState, Volume};
 

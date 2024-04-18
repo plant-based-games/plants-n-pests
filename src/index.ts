@@ -34,7 +34,7 @@ const game = makeGame(config)
 
 const doIfValidPlayer = (req: Request, res: Response, f: (playerId: number) => State) => {
   const result = Cookie.safeParse(req.session)
-  if (result.success === true) {
+  if (result.success) {
     const gameState = f(result.data.player)
     res.send(gameState)
   } else {

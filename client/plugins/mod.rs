@@ -1,10 +1,11 @@
-mod draft_plugin;
-mod endgame_plugin;
-pub(crate) mod game_plugin;
-pub(crate) mod hello_plugin;
-pub(crate) mod menu_plugin;
-pub(crate) mod network_plugin;
-pub(crate) mod splash_plugin;
+pub(crate) mod client;
+mod draft;
+mod endgame;
+pub(crate) mod game;
+pub(crate) mod hello;
+pub(crate) mod menu;
+pub(crate) mod networking;
+pub(crate) mod splash;
 pub(crate) mod state_handler_plugin;
 
 use bevy::prelude::*;

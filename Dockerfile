@@ -1,17 +1,16 @@
 ARG nodeV=21.7.2
 
-from node:${nodeV}-bullseye-slim as build
+FROM node:${nodeV}-bullseye-slim as build
+COPY package.json package-lock.json ./
+RUN npm install
+COPY tsconfig.json jest.config.ts .eslintrc.yaml .prettierrc.yaml ./
+COPY src src
+COPY test test
+RUN npm run ci
 
-copy package.json package-lock.json ./
-run npm install
-copy tsconfig.json jest.config.ts .eslintrc.yaml .prettierrc.yaml ./
-copy src src
-copy test test
-run npm run ci
-
-from node:${nodeV}-bullseye-slim as release
-copy package.json package-lock.json ./
-copy public public
-copy --from=build dist/ dist/
-run npm install --omit=dev
-entrypoint ["npm", "start"]
+FROM node:${nodeV}-bullseye-slim as release
+COPY package.json package-lock.json ./
+COPY public public
+COPY --from=build dist/ dist/
+RUN npm install --omit=dev
+ENTRYPOINT ["npm", "start"]
